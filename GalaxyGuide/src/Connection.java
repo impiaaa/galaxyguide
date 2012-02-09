@@ -32,7 +32,7 @@ public class Connection {
 	 * @return Returns the target.
 	 */
 	public Star getTarget() {
-		return target;
+		return this.target;
 	}
 	
 	/**
@@ -48,7 +48,7 @@ public class Connection {
 	 * @return Returns the cost.
 	 */
 	public double getCost() {
-		return cost;
+		return this.cost;
 	}
 	
 	/**
