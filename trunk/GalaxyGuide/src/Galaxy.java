@@ -10,6 +10,11 @@ import java.util.TreeSet;
 public class Galaxy {
 	private TreeSet<Star> stars;
 
+	/**
+	 * TODO Put here a description of what this constructor does.
+	 *
+	 * @param stars
+	 */
 	public Galaxy(TreeSet<Star> stars) {
 		this.stars = stars;
 	}
