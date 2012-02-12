@@ -13,6 +13,7 @@ public class Star implements Comparable<Star> {
 	private LinkedList<Connection> connections;
 	private int interestLevel;
 	private LinkedList<String> attractions;
+	private double range; 
 	
 	/**
 	 * TODO Put here a description of what this constructor does.
@@ -112,6 +113,14 @@ public class Star implements Comparable<Star> {
 	@Override
 	public int compareTo(Star other) {
 		return this.name.compareTo(other.name);
+	}
+
+	public double getRange() {
+		return range;
+	}
+
+	public void setRange(double range) {
+		this.range = range;
 	}
 	
 }
