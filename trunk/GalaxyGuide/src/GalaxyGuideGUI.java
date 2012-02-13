@@ -1,4 +1,7 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -14,7 +17,7 @@ import java.util.TreeSet;
  * @author alvessr.
  *         Created Feb 6, 2012.
  */
-public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener {
+public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, ActionListener {
 	private JFrame frmGuideToThe;
 	private FilteredListModel<Star> starModel;
 	private FilteredListModel<String> tripModel;
@@ -24,6 +27,7 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener {
 	private JTextField tripSearch;
 	private JTextField starSearch;
 	private StarMapPanel canvas;
+	private JTabbedPane tabbedPane;
 
 	/**
 	 * Launch the application.
@@ -97,16 +101,17 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener {
 		starMapPanel.add(starMapLabel);
 		
 		JButton btnGo = new JButton("Go!");
+		btnGo.addActionListener(this);
 		sl_starMapPanel.putConstraint(SpringLayout.NORTH, starMapPane, 6, SpringLayout.SOUTH, btnGo);
 		sl_starMapPanel.putConstraint(SpringLayout.NORTH, btnGo, 6, SpringLayout.NORTH, starMapPanel);
 		sl_starMapPanel.putConstraint(SpringLayout.EAST, btnGo, -6, SpringLayout.EAST, starMapPanel);
 		starMapPanel.add(btnGo);
 		
-		JTabbedPane tabbedPane = new JTabbedPane(SwingConstants.TOP);
-		splitPane.setLeftComponent(tabbedPane);
+		this.tabbedPane = new JTabbedPane(SwingConstants.TOP);
+		splitPane.setLeftComponent(this.tabbedPane);
 		
 		JPanel tripPanel = new JPanel();
-		tabbedPane.addTab("Trip Planner", null, tripPanel, null);
+		this.tabbedPane.addTab("Trip Planner", null, tripPanel, null);
 		SpringLayout sl_tripPanel = new SpringLayout();
 		tripPanel.setLayout(sl_tripPanel);
 		
@@ -138,7 +143,7 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener {
 		this.tripSearch.getDocument().addDocumentListener(this);
 		
 		JPanel routePanel = new JPanel();
-		tabbedPane.addTab("Route Finder", null, routePanel, null);
+		this.tabbedPane.addTab("Route Finder", null, routePanel, null);
 		SpringLayout sl_routePanel = new SpringLayout();
 		routePanel.setLayout(sl_routePanel);
 		
@@ -201,5 +206,16 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener {
 	public void valueChanged(ListSelectionEvent arg0) {
 		this.canvas.setHighlight(this.starModel.getElementAt(arg0.getFirstIndex()));
 		this.canvas.repaint();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// Go button clicked
+		switch (this.tabbedPane.getSelectedIndex()) {
+		case 0:
+			// Trip planner
+		case 1:
+			// Path search
+		}
 	}
 }
