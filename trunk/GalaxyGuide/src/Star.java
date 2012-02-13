@@ -115,12 +115,27 @@ public class Star implements Comparable<Star> {
 		return this.name.compareTo(other.name);
 	}
 
+	/**
+	 * TODO Put here a description of what this method does.
+	 *
+	 * @return
+	 */
 	public double getRange() {
-		return range;
+		return this.range;
 	}
 
+	/**
+	 * TODO Put here a description of what this method does.
+	 *
+	 * @param range
+	 */
 	public void setRange(double range) {
 		this.range = range;
+	}
+
+	@Override
+	public String toString() {
+		return this.name;
 	}
 	
 }

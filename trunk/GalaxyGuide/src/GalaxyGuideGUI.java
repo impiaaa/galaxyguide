@@ -2,6 +2,9 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 import java.util.TreeSet;
 
 
@@ -11,15 +14,16 @@ import java.util.TreeSet;
  * @author alvessr.
  *         Created Feb 6, 2012.
  */
-public class GalaxyGuideGUI implements DocumentListener {
+public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener {
 	private JFrame frmGuideToThe;
-	private FilteredListModel<String> starModel;
+	private FilteredListModel<Star> starModel;
 	private FilteredListModel<String> tripModel;
-	private JList<String> fromList;
-	private JList<String> toList;
+	private JList<Star> fromList;
+	private JList<Star> toList;
 	private JList<String> tripList;
 	private JTextField tripSearch;
 	private JTextField starSearch;
+	private StarMapPanel canvas;
 
 	/**
 	 * Launch the application.
@@ -50,13 +54,17 @@ public class GalaxyGuideGUI implements DocumentListener {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		TreeSet<String> stars = new TreeSet<String>();
+		TreeSet<Star> stars = new TreeSet<Star>();
 		TreeSet<String> trips = new TreeSet<String>();
 		for (char i = 'A'; i < 'Z'; i++) {
 			trips.add("Trip "+i);
-			stars.add("Star "+i);
+			Star s = new Star("Star "+i);
+			s.getPosition().x = Math.random()*1024;
+			s.getPosition().y = Math.random()*1024;
+			s.getPosition().z = Math.random()*1024;
+			stars.add(s);
 		}
-		this.starModel = new FilteredListModel<String>(stars);
+		this.starModel = new FilteredListModel<Star>(stars);
 		this.tripModel = new FilteredListModel<String>(trips);
 
 		this.frmGuideToThe = new JFrame();
@@ -74,11 +82,14 @@ public class GalaxyGuideGUI implements DocumentListener {
 		SpringLayout sl_starMapPanel = new SpringLayout();
 		starMapPanel.setLayout(sl_starMapPanel);
 		
-		JScrollPane starMap = new JScrollPane();
-		sl_starMapPanel.putConstraint(SpringLayout.WEST, starMap, 0, SpringLayout.WEST, starMapPanel);
-		sl_starMapPanel.putConstraint(SpringLayout.SOUTH, starMap, 0, SpringLayout.SOUTH, starMapPanel);
-		sl_starMapPanel.putConstraint(SpringLayout.EAST, starMap, 0, SpringLayout.EAST, starMapPanel);
-		starMapPanel.add(starMap);
+		JScrollPane starMapPane = new JScrollPane();
+		sl_starMapPanel.putConstraint(SpringLayout.WEST, starMapPane, 0, SpringLayout.WEST, starMapPanel);
+		sl_starMapPanel.putConstraint(SpringLayout.SOUTH, starMapPane, 0, SpringLayout.SOUTH, starMapPanel);
+		sl_starMapPanel.putConstraint(SpringLayout.EAST, starMapPane, 0, SpringLayout.EAST, starMapPanel);
+		starMapPanel.add(starMapPane);
+		this.canvas = new StarMapPanel(stars);
+		this.canvas.setPreferredSize(new Dimension(1024, 1024));
+		starMapPane.setViewportView(this.canvas);
 		
 		JLabel starMapLabel = new JLabel("Star Map");
 		sl_starMapPanel.putConstraint(SpringLayout.NORTH, starMapLabel, 6, SpringLayout.NORTH, starMapPanel);
@@ -86,7 +97,7 @@ public class GalaxyGuideGUI implements DocumentListener {
 		starMapPanel.add(starMapLabel);
 		
 		JButton btnGo = new JButton("Go!");
-		sl_starMapPanel.putConstraint(SpringLayout.NORTH, starMap, 6, SpringLayout.SOUTH, btnGo);
+		sl_starMapPanel.putConstraint(SpringLayout.NORTH, starMapPane, 6, SpringLayout.SOUTH, btnGo);
 		sl_starMapPanel.putConstraint(SpringLayout.NORTH, btnGo, 6, SpringLayout.NORTH, starMapPanel);
 		sl_starMapPanel.putConstraint(SpringLayout.EAST, btnGo, -6, SpringLayout.EAST, starMapPanel);
 		starMapPanel.add(btnGo);
@@ -138,7 +149,8 @@ public class GalaxyGuideGUI implements DocumentListener {
 		routePanel.add(this.starSearch);
 		this.starSearch.getDocument().addDocumentListener(this);
 		
-		this.fromList = new JList<String>();
+		this.fromList = new JList<Star>();
+		this.fromList.addListSelectionListener(this);
 		JScrollPane p2 = new JScrollPane(this.fromList);
 		sl_routePanel.putConstraint(SpringLayout.NORTH, p2, 10, SpringLayout.NORTH, routePanel);
 		sl_routePanel.putConstraint(SpringLayout.WEST, p2, 10, SpringLayout.WEST, routePanel);
@@ -146,7 +158,8 @@ public class GalaxyGuideGUI implements DocumentListener {
 		sl_routePanel.putConstraint(SpringLayout.EAST, p2, -3, SpringLayout.HORIZONTAL_CENTER, routePanel);
 		routePanel.add(p2);
 		
-		this.toList = new JList<String>();
+		this.toList = new JList<Star>();
+		this.toList.addListSelectionListener(this);
 		JScrollPane p3 = new JScrollPane(this.toList);
 		sl_routePanel.putConstraint(SpringLayout.NORTH, p3, 10, SpringLayout.NORTH, routePanel);
 		sl_routePanel.putConstraint(SpringLayout.WEST, p3, 3, SpringLayout.HORIZONTAL_CENTER, routePanel);
@@ -160,18 +173,20 @@ public class GalaxyGuideGUI implements DocumentListener {
 
 	@Override
 	public void changedUpdate(DocumentEvent arg0) {
-		if (arg0.getDocument() == this.starSearch.getDocument()) {
-			this.starModel.setFilter(this.starSearch.getText());
-			this.starModel.update();
-		}
-		else {
-			this.tripModel.setFilter(this.tripSearch.getText());
-			this.tripModel.update();
-		}
+		this.filter(arg0);
 	}
 
 	@Override
 	public void insertUpdate(DocumentEvent arg0) {
+		this.filter(arg0);
+	}
+
+	@Override
+	public void removeUpdate(DocumentEvent arg0) {
+		this.filter(arg0);
+	}
+
+	private void filter(DocumentEvent arg0) {
 		if (arg0.getDocument() == this.starSearch.getDocument()) {
 			this.starModel.setFilter(this.starSearch.getText());
 			this.starModel.update();
@@ -183,15 +198,8 @@ public class GalaxyGuideGUI implements DocumentListener {
 	}
 
 	@Override
-	public void removeUpdate(DocumentEvent arg0) {
-		if (arg0.getDocument() == this.starSearch.getDocument()) {
-			this.starModel.setFilter(this.starSearch.getText());
-			this.starModel.update();
-		}
-		else {
-			this.tripModel.setFilter(this.tripSearch.getText());
-			this.tripModel.update();
-		}
+	public void valueChanged(ListSelectionEvent arg0) {
+		this.canvas.setHighlight(this.starModel.getElementAt(arg0.getFirstIndex()));
+		this.canvas.repaint();
 	}
-
 }
