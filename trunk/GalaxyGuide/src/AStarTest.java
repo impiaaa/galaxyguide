@@ -3,14 +3,14 @@ import java.util.ArrayList;
 
 
 /**
- * TODO Put here a description of what this class does.
+ * A Star Test
  * 
  * @author niz. Created Feb 13, 2012.
  */
 public class AStarTest {
 
 	/**
-	 * TODO Put here a description of what this method does.
+	 * main
 	 * 
 	 * @param args
 	 */
@@ -59,11 +59,20 @@ public class AStarTest {
 		AStarSearch a = new AStarSearch(B,D);
 		AStarSearch.State test = a.search();
 		
+		DijkstrasSearch d = new DijkstrasSearch(B,D);
+		DijkstrasSearch.State test1 = d.search();
+		
 		if (test == null)
 			System.out.println("No path");
 		else
 			System.out.println("path = " + test.pathToString() + " cost = "
 					+ test.g_score());
+		
+		if (test1 == null)
+			System.out.println("No path");
+		else
+			System.out.println("path = " + test1.pathToString() + " cost = "
+					+ test1.g_score());
 
 
 	}

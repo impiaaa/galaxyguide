@@ -3,21 +3,19 @@ import java.util.PriorityQueue;
 import java.util.HashSet;
 import java.util.LinkedList;
 
+/**
+ * This class contains A Star Search and D
+ * 
+ * @author niz. Created Feb 13, 2012.
+ */
 public class AStarSearch {
-	Star start;
-	Star goal;
-	State start_state;
-	// the set of star already been evaluated
-	HashSet<Star> closedset;
-	// the set of tentative star to be evaluated, initially contain
-	PriorityQueue<State> openset;
-	// the path of navigated star;
-	LinkedList<Star> path;
-
-	double cost;
+	private Star goal;
+	private State start_state;
+	private HashSet<Star> closedset;
+	private PriorityQueue<State> openset;
 
 	/**
-	 * TODO Put here a description of what this class does.
+	 * The state class for search
 	 * 
 	 * @author niz. Created Feb 13, 2012.
 	 */
@@ -26,12 +24,16 @@ public class AStarSearch {
 		/**
 		 * problem specific variables
 		 */
-		Star star;
-		LinkedList<Star> path;
-		double cost;
+		private Star star;
+		private LinkedList<Star> path;
+		private double cost;
 
 		/**
 		 * Constructor
+		 * 
+		 * @param curr
+		 * @param prev_path
+		 * @param new_cost
 		 */
 		public State(Star curr, LinkedList<Star> prev_path, double new_cost) {
 			this.star = curr;
@@ -80,16 +82,13 @@ public class AStarSearch {
 		}
 
 		/**
-		 * Add the next states the priority queue (os).
+		 * Add the next states the A* priority queue (os).
 		 * 
 		 * @param os
 		 * 
 		 * @param Q
 		 */
 		void next(PriorityQueue<State> os) {
-			// Add next hops from this state to queue Q
-			//
-
 			LinkedList<Connection> sat = this.star.getConnections();
 			for (Connection c : sat) {
 				if (c.getCost() != 0.0) {
@@ -100,8 +99,8 @@ public class AStarSearch {
 				}
 
 			}
-
 		}
+		
 
 		/**
 		 * returns true iff this is the goal state
@@ -134,17 +133,18 @@ public class AStarSearch {
 			return "" + this.star;
 
 		}
+
 		/**
 		 * sysout the path
-		 *
+		 * 
 		 * @return string
 		 */
-		public String pathToString(){
-			StringBuilder sb= new StringBuilder();
+		public String pathToString() {
+			StringBuilder sb = new StringBuilder();
 			Iterator<Star> pi = this.path.iterator();
 			sb.append('[');
 			sb.append("->");
-			while (pi.hasNext()){
+			while (pi.hasNext()) {
 				sb.append(pi.next().getName());
 				sb.append("->");
 			}
@@ -160,13 +160,10 @@ public class AStarSearch {
 	 * @param g
 	 */
 	public AStarSearch(Star st, Star g) {
-		this.start = st;
 		this.goal = g;
 		this.openset = new PriorityQueue<State>();
 		this.closedset = new HashSet<Star>();
-		this.path = new LinkedList<Star>();
-		this.cost = 0;
-		this.start_state = new State(st, this.path, this.cost);
+		this.start_state = new State(st, new LinkedList<Star>(), 0);
 	}
 
 	/**
