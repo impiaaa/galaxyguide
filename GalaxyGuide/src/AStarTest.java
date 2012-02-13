@@ -46,7 +46,7 @@ public class AStarTest {
 		System.out.println(cost(B,E)+"\n");
 		System.out.println(cost(B,C)+"\n");
 		System.out.println(cost(C,D)+"\n");
-		System.out.println(cost(A,B)+"\n");
+		System.out.println(cost(D,E)+"\n");
 		
 		
 		
@@ -56,7 +56,7 @@ public class AStarTest {
 		Starlist.add(D);
 		Starlist.add(E);
 		
-		AStarSearch a = new AStarSearch(A,E);
+		AStarSearch a = new AStarSearch(B,D);
 		AStarSearch.State test = a.search();
 		
 		if (test == null)
