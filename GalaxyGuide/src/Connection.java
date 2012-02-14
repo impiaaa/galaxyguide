@@ -23,7 +23,7 @@ public class Connection {
 	
 	@Override
 	public String toString() {
-		return "Connection [target=" + this.target + ", cost=" + this.cost
+		return "Connection [target=" + this.target.getName() + ", cost=" + this.cost
 				+ "]";
 	}
 
