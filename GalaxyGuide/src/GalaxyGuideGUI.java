@@ -21,9 +21,9 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 	private JFrame frmGuideToThe;
 	private FilteredListModel<Star> starModel;
 	private FilteredListModel<String> tripModel;
-	private JList<Star> fromList;
-	private JList<Star> toList;
-	private JList<String> tripList;
+	private JList fromList;
+	private JList toList;
+	private JList tripList;
 	private JTextField tripSearch;
 	private JTextField starSearch;
 	private StarMapPanel canvas;
@@ -120,7 +120,7 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 		sl_tripPanel.putConstraint(SpringLayout.WEST, rangeLabel, 10, SpringLayout.WEST, tripPanel);
 		tripPanel.add(rangeLabel);
 		
-		this.tripList = new JList<String>(this.tripModel);
+		this.tripList = new JList(this.tripModel);
 		JScrollPane s1 = new JScrollPane(this.tripList);
 		sl_tripPanel.putConstraint(SpringLayout.NORTH, s1, 6, SpringLayout.SOUTH, rangeLabel);
 		sl_tripPanel.putConstraint(SpringLayout.WEST, s1, 10, SpringLayout.WEST, tripPanel);
@@ -154,7 +154,7 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 		routePanel.add(this.starSearch);
 		this.starSearch.getDocument().addDocumentListener(this);
 		
-		this.fromList = new JList<Star>();
+		this.fromList = new JList();
 		this.fromList.addListSelectionListener(this);
 		JScrollPane p2 = new JScrollPane(this.fromList);
 		sl_routePanel.putConstraint(SpringLayout.NORTH, p2, 10, SpringLayout.NORTH, routePanel);
@@ -163,7 +163,7 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 		sl_routePanel.putConstraint(SpringLayout.EAST, p2, -3, SpringLayout.HORIZONTAL_CENTER, routePanel);
 		routePanel.add(p2);
 		
-		this.toList = new JList<Star>();
+		this.toList = new JList();
 		this.toList.addListSelectionListener(this);
 		JScrollPane p3 = new JScrollPane(this.toList);
 		sl_routePanel.putConstraint(SpringLayout.NORTH, p3, 10, SpringLayout.NORTH, routePanel);

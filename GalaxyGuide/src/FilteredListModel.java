@@ -11,7 +11,7 @@ import javax.swing.AbstractListModel;
  *         Created Feb 12, 2012.
  * @param <E> 
  */
-public class FilteredListModel<E> extends AbstractListModel<E> {
+public class FilteredListModel<E> extends AbstractListModel {
 	private Iterable<E> original;
 	private ArrayList<E> filtered;
 	private String filter;

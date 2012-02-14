@@ -34,7 +34,7 @@ public class TripPlanner {
 	}
 	
 	
-	public LinkedList<Trip> compileTrips(Star startingPoint, double maxCost){
+	public void compileTrips(Star startingPoint, double maxCost){
 		
 		this.startingPoint = startingPoint;
 		this.maxCost = maxCost;
@@ -42,10 +42,8 @@ public class TripPlanner {
 		LinkedList<Connection> tripSoFar = new LinkedList<Connection>();
 		tripSoFar.add(new Connection(startingPoint, 0.));
 		
-		LinkedList<Trip> possibleTrips = this.getTrips(tripSoFar, 0., 0, new LinkedList<String>(), startingPoint);
-		
-		return possibleTrips;
-		
+		this.getTrips(tripSoFar, 0., 0, new LinkedList<String>(), startingPoint);
+				
 	}
 
 	
@@ -57,7 +55,7 @@ public class TripPlanner {
 	 * @param maxCost
 	 * @return
 	 */
-	private LinkedList<Trip> getTrips(LinkedList<Connection> tripSoFar, double costSoFar, int attractionSoFar, LinkedList<String> attractionsSoFar, Star curStar) {
+	private void getTrips(LinkedList<Connection> tripSoFar, double costSoFar, int attractionSoFar, LinkedList<String> attractionsSoFar, Star curStar) {
 		// TODO Auto-generated method stub.
 		
 		attractionSoFar += curStar.getInterestLevel();
@@ -112,7 +110,6 @@ public class TripPlanner {
 		
 		// if the cost so far + the cost of the connection is less than the maximum cost, proceed
 		
-		return null;
 	}
 	
 }
