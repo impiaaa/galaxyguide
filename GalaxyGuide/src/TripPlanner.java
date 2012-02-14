@@ -19,11 +19,13 @@ public class TripPlanner {
 	private Star startingPoint;
 	private double maxCost;
 	
-	/*
-	
-	private LinkedList<Trip> subTrips;
-	private TreeSet<Star> visitedStars;
-	*/
+	/**
+	 * TODO Put here a description of what this constructor does.
+	 *
+	 */
+	public TripPlanner(){
+		
+	}
 	
 	public PriorityQueue<Trip> getPossibleTrips(){
 		return this.possibleTrips;
