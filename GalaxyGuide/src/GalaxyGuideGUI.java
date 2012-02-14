@@ -58,18 +58,16 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		TreeSet<Star> stars = new TreeSet<Star>();
 		TreeSet<String> trips = new TreeSet<String>();
 		for (char i = 'A'; i < 'Z'; i++) {
 			trips.add("Trip "+i);
-			Star s = new Star("Star "+i);
-			s.getPosition().x = Math.random()*1024;
-			s.getPosition().y = Math.random()*1024;
-			s.getPosition().z = Math.random()*1024;
-			stars.add(s);
 		}
-		this.starModel = new FilteredListModel<Star>(stars);
 		this.tripModel = new FilteredListModel<String>(trips);
+
+		GalaxyGenerator gen = new GalaxyGenerator((int) System.currentTimeMillis());
+		gen.genStars();
+		TreeSet<Star> stars = gen.getBinaryTree();
+		this.starModel = new FilteredListModel<Star>(stars);
 
 		this.frmGuideToThe = new JFrame();
 		this.frmGuideToThe.setTitle("Guide to the Galaxy");
