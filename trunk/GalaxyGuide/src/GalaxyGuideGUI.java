@@ -8,6 +8,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import java.util.ArrayList;
 import java.util.TreeSet;
 
 
@@ -28,6 +29,7 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 	private JTextField starSearch;
 	private StarMapPanel canvas;
 	private JTabbedPane tabbedPane;
+	private JList starTripList;
 
 	/**
 	 * Launch the application.
@@ -58,16 +60,13 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		TreeSet<String> trips = new TreeSet<String>();
-		for (char i = 'A'; i < 'Z'; i++) {
-			trips.add("Trip "+i);
-		}
-		this.tripModel = new FilteredListModel<String>(trips);
+		TripPlanner tp = new TripPlanner();
+		this.tripModel = new FilteredListModel<String>(new ArrayList<String>());
 
 		GalaxyGenerator gen = new GalaxyGenerator((int) System.currentTimeMillis());
 		gen.genStars();
 		TreeSet<Star> stars = gen.getBinaryTree();
-		this.starModel = new FilteredListModel<Star>(stars);
+		this.starModel = new FilteredListModel<Star>(new ArrayList<Star>());
 
 		this.frmGuideToThe = new JFrame();
 		this.frmGuideToThe.setTitle("Guide to the Galaxy");
@@ -89,7 +88,7 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 		sl_starMapPanel.putConstraint(SpringLayout.SOUTH, starMapPane, 0, SpringLayout.SOUTH, starMapPanel);
 		sl_starMapPanel.putConstraint(SpringLayout.EAST, starMapPane, 0, SpringLayout.EAST, starMapPanel);
 		starMapPanel.add(starMapPane);
-		this.canvas = new StarMapPanel(stars);
+		this.canvas = new StarMapPanel(null);
 		this.canvas.setPreferredSize(new Dimension(1024, 1024));
 		starMapPane.setViewportView(this.canvas);
 		
@@ -129,15 +128,32 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 		sl_tripPanel.putConstraint(SpringLayout.SOUTH, rangeLabel, 0, SpringLayout.SOUTH, rangeSlider);
 		sl_tripPanel.putConstraint(SpringLayout.NORTH, rangeSlider, 10, SpringLayout.NORTH, tripPanel);
 		sl_tripPanel.putConstraint(SpringLayout.WEST, rangeSlider, 6, SpringLayout.EAST, rangeLabel);
-		sl_tripPanel.putConstraint(SpringLayout.EAST, rangeSlider, -10, SpringLayout.EAST, tripPanel);
 		tripPanel.add(rangeSlider);
 		
 		this.tripSearch = new JTextField();
-		sl_tripPanel.putConstraint(SpringLayout.SOUTH, s1, -6, SpringLayout.NORTH, this.tripSearch);
+		sl_tripPanel.putConstraint(SpringLayout.SOUTH, s1, -142, SpringLayout.NORTH, tripSearch);
 		sl_tripPanel.putConstraint(SpringLayout.WEST, this.tripSearch, 10, SpringLayout.WEST, tripPanel);
 		sl_tripPanel.putConstraint(SpringLayout.SOUTH, this.tripSearch, -10, SpringLayout.SOUTH, tripPanel);
 		sl_tripPanel.putConstraint(SpringLayout.EAST, this.tripSearch, -10, SpringLayout.EAST, tripPanel);
 		tripPanel.add(this.tripSearch);
+		
+		JButton btnFindTrips = new JButton("Find trips");
+		sl_tripPanel.putConstraint(SpringLayout.EAST, rangeSlider, -6, SpringLayout.WEST, btnFindTrips);
+		sl_tripPanel.putConstraint(SpringLayout.NORTH, btnFindTrips, 10, SpringLayout.NORTH, tripPanel);
+		sl_tripPanel.putConstraint(SpringLayout.EAST, btnFindTrips, -10, SpringLayout.EAST, tripPanel);
+		tripPanel.add(btnFindTrips);
+		
+		JScrollPane s2 = new JScrollPane();
+		sl_tripPanel.putConstraint(SpringLayout.NORTH, s2, 6, SpringLayout.SOUTH, s1);
+		sl_tripPanel.putConstraint(SpringLayout.WEST, s2, 10, SpringLayout.WEST, tripPanel);
+		sl_tripPanel.putConstraint(SpringLayout.SOUTH, s2, -6, SpringLayout.NORTH, tripSearch);
+		sl_tripPanel.putConstraint(SpringLayout.EAST, s2, -10, SpringLayout.EAST, tripPanel);
+		tripPanel.add(s2);
+		
+		starTripList = new JList();
+		starTripList.setModel(this.starModel);
+		s2.setViewportView(starTripList);
+		
 		this.tripSearch.getDocument().addDocumentListener(this);
 		
 		JPanel routePanel = new JPanel();
@@ -158,14 +174,14 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 		sl_routePanel.putConstraint(SpringLayout.NORTH, p2, 10, SpringLayout.NORTH, routePanel);
 		sl_routePanel.putConstraint(SpringLayout.WEST, p2, 10, SpringLayout.WEST, routePanel);
 		sl_routePanel.putConstraint(SpringLayout.SOUTH, p2, -6, SpringLayout.NORTH, this.starSearch);
-		sl_routePanel.putConstraint(SpringLayout.EAST, p2, -3, SpringLayout.HORIZONTAL_CENTER, routePanel);
+		//sl_routePanel.putConstraint(SpringLayout.EAST, p2, -3, SpringLayout.HORIZONTAL_CENTER, routePanel);
 		routePanel.add(p2);
 		
 		this.toList = new JList();
 		this.toList.addListSelectionListener(this);
 		JScrollPane p3 = new JScrollPane(this.toList);
 		sl_routePanel.putConstraint(SpringLayout.NORTH, p3, 10, SpringLayout.NORTH, routePanel);
-		sl_routePanel.putConstraint(SpringLayout.WEST, p3, 3, SpringLayout.HORIZONTAL_CENTER, routePanel);
+		//sl_routePanel.putConstraint(SpringLayout.WEST, p3, 3, SpringLayout.HORIZONTAL_CENTER, routePanel);
 		sl_routePanel.putConstraint(SpringLayout.SOUTH, p3, -6, SpringLayout.NORTH, this.starSearch);
 		sl_routePanel.putConstraint(SpringLayout.EAST, p3, -10, SpringLayout.EAST, routePanel);
 		routePanel.add(p3);
