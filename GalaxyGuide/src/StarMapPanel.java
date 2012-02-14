@@ -28,14 +28,16 @@ public class StarMapPanel extends JPanel {
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setBackground(Color.black);
 		g2.clearRect(0, 0, this.getWidth(), this.getHeight());
-		for (Star s : this.stars) {
-			if (this.highlight == s) {
-				g.setColor(Color.green);
+		if (this.stars != null) {
+			for (Star s : this.stars) {
+				if (this.highlight == s) {
+					g.setColor(Color.green);
+				}
+				else {
+					g2.setColor(Color.white);
+				}
+				g2.fillOval((int)(s.getPosition().x-2), (int)(s.getPosition().y-2), 4, 4);
 			}
-			else {
-				g2.setColor(Color.white);
-			}
-			g2.fillOval((int)(s.getPosition().x-2), (int)(s.getPosition().y-2), 4, 4);
 		}
 	}
 	/**
