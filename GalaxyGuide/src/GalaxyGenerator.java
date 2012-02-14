@@ -1,11 +1,12 @@
 import java.util.Random;
+import java.util.TreeSet;
 
 
 public class GalaxyGenerator {
 	private static final double STARS_PER_KILOPARSEC = 1;
 	
-	Random rand;
-	Octree octree;
+	private Random rand;
+	private Octree octree;
 	public GalaxyGenerator(double size, int numStarTypes){
 		super();
 		rand = new Random();
@@ -33,5 +34,9 @@ public class GalaxyGenerator {
 				octree.insert(e, i);
 			}
 		}
+	}
+	
+	public TreeSet<Star> getBinaryTree(){
+		return octree.toTreeSet();
 	}
 }
