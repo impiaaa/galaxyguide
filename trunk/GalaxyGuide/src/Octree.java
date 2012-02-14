@@ -1,4 +1,5 @@
 import java.util.LinkedList;
+import java.util.TreeSet;
 
 
 public class Octree {
@@ -106,7 +107,25 @@ public class Octree {
 			}
 			return false;
 		}
+
+
+		public void toTree(TreeSet<Star> tree) {
+			for(Star i : list){
+				tree.add(i);
+			}
+			if(children!= null){
+				for(int i = 0; i< 8; i++){
+					children[i].toTree(tree);
+				}
+			}
+		}
 		
+	}
+
+	public TreeSet<Star> toTreeSet() {
+		TreeSet<Star> tree = new TreeSet<Star>();
+		root.toTree(tree);
+		return tree;
 	}
 	
 }
