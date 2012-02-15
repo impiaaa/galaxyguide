@@ -54,6 +54,7 @@ public class StarMapPanel extends JPanel {
 					continue;
 				}
 				g2.drawLine(last.x.intValue(), last.y.intValue(), s.getPosition().x.intValue(), s.getPosition().y.intValue());
+				last = s.getPosition();
 			}
 		}
 	}

@@ -138,6 +138,7 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 		
 		this.tripList = new JList();
 		this.starTripList = new JList(this.starModel);
+		this.starTripList.addListSelectionListener(this);
 		JScrollPane s1 = new JScrollPane(this.starTripList);
 		sl_tripPanel.putConstraint(SpringLayout.NORTH, s1, 6, SpringLayout.SOUTH, this.btnFindTrips);
 		sl_tripPanel.putConstraint(SpringLayout.WEST, s1, 10, SpringLayout.WEST, tripPanel);
@@ -239,7 +240,9 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 			switch (this.tabbedPane.getSelectedIndex()) {
 			case 0:
 				// Trip planner
-				this.tripList.getSelectedValue();
+				Trip t = (Trip) this.tripList.getSelectedValue();
+				this.canvas.setPath(t.getConnections());
+				this.canvas.repaint();
 				break;
 			case 1:
 				// Path search
