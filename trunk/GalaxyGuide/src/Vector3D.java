@@ -17,6 +17,6 @@ public class Vector3D<T extends Number> {
 	
 	@Override
 	public String toString(){
-		return ""+x+y+z;
+		return ":"+x+":"+y+":"+z;
 	}
 }

@@ -10,25 +10,14 @@ public class Octree {
 	
 
 	/**
-	 * creates an Octree with a default depth of 10.
-	 * and a default size of 10 in each dimension
-	 */
-	public Octree(){
-		super();
-		root = new octNode(0,0.0,0.0,0.0);
-		size = 10;
-		depth = 10;
-	}
-	
-	/**
 	 * creates an Octree with the given depth, 
 	 * and with the default size of 10 in each dimension
 	 * @param depth the number of levels the tree has
 	 */
 	public Octree(int depth){
+		this.depth = depth;
 		root = new octNode(0,0.0,0.0,0.0);
 		size = 10;
-		this.depth = depth;
 	}
 	
 	/**
@@ -101,11 +90,10 @@ public class Octree {
 			if(e.getPosition().z > loc.z+((bnd.z-loc.z)/2)) node+=2;
 			if(e.getPosition().x > loc.x+((bnd.x-loc.x)/2)) node+=1;
 			if(level == this.level+1){
-				children[node].add(e);
+				return children[node].add(e);
 			} else {
-				children[node].insert(e, level);
+				return children[node].insert(e, level);
 			}
-			return false;
 		}
 
 

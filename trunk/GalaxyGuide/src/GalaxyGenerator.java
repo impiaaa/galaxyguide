@@ -3,7 +3,7 @@ import java.util.TreeSet;
 
 
 public class GalaxyGenerator {
-	private static final double STARS_PER_KILOPARSEC = 1;
+	private static final double STARS_PER_KILOPARSEC = 0.25;
 	
 	private Random rand;
 	private Octree octree;
@@ -17,7 +17,7 @@ public class GalaxyGenerator {
 	public GalaxyGenerator(int seed){
 		rand = new Random(seed);
 		
-		octree = new Octree(rand.nextInt(20),rand.nextFloat()*50);
+		octree = new Octree(4,rand.nextFloat()*50);
 	}
 	
 	/**
@@ -26,7 +26,7 @@ public class GalaxyGenerator {
 	 */
 	public void genStars(){
 		for(int i = 0; i < octree.depth; i++){
-			for(int j = 0; j < ((8^i)*STARS_PER_KILOPARSEC*octree.size);j++){
+			for(int j = 0; j < ((Math.pow(8,i))*STARS_PER_KILOPARSEC*octree.size);j++){
 				Vector3D<Double> pos = new Vector3D<Double>(rand.nextDouble()*octree.size,rand.nextDouble()*octree.size,rand.nextDouble()*octree.size);
 				Star e = new Star((char)(i+65)+""+pos.toString());
 				e.setRange(rand.nextDouble()*20+i*8);
@@ -34,9 +34,12 @@ public class GalaxyGenerator {
 				octree.insert(e, i);
 			}
 		}
+		System.out.println(octree.depth);
 	}
 	
 	public TreeSet<Star> getBinaryTree(){
-		return octree.toTreeSet();
+		TreeSet<Star> tree = octree.toTreeSet();
+		System.out.println(tree);
+		return tree;
 	}
 }
