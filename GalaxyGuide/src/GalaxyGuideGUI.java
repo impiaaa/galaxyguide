@@ -66,7 +66,7 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 		GalaxyGenerator gen = new GalaxyGenerator((int) System.currentTimeMillis());
 		gen.genStars();
 		TreeSet<Star> stars = gen.getBinaryTree();
-		this.starModel = new FilteredListModel<Star>(new ArrayList<Star>());
+		this.starModel = new FilteredListModel<Star>(stars);
 
 		this.frmGuideToThe = new JFrame();
 		this.frmGuideToThe.setTitle("Guide to the Galaxy");
@@ -88,7 +88,7 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 		sl_starMapPanel.putConstraint(SpringLayout.SOUTH, starMapPane, 0, SpringLayout.SOUTH, starMapPanel);
 		sl_starMapPanel.putConstraint(SpringLayout.EAST, starMapPane, 0, SpringLayout.EAST, starMapPanel);
 		starMapPanel.add(starMapPane);
-		this.canvas = new StarMapPanel(null);
+		this.canvas = new StarMapPanel(stars);
 		this.canvas.setPreferredSize(new Dimension(1024, 1024));
 		starMapPane.setViewportView(this.canvas);
 		
@@ -174,14 +174,14 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 		sl_routePanel.putConstraint(SpringLayout.NORTH, p2, 10, SpringLayout.NORTH, routePanel);
 		sl_routePanel.putConstraint(SpringLayout.WEST, p2, 10, SpringLayout.WEST, routePanel);
 		sl_routePanel.putConstraint(SpringLayout.SOUTH, p2, -6, SpringLayout.NORTH, this.starSearch);
-		//sl_routePanel.putConstraint(SpringLayout.EAST, p2, -3, SpringLayout.HORIZONTAL_CENTER, routePanel);
+		sl_routePanel.putConstraint(SpringLayout.EAST, p2, -3, SpringLayout.HORIZONTAL_CENTER, routePanel);
 		routePanel.add(p2);
 		
 		this.toList = new JList();
 		this.toList.addListSelectionListener(this);
 		JScrollPane p3 = new JScrollPane(this.toList);
 		sl_routePanel.putConstraint(SpringLayout.NORTH, p3, 10, SpringLayout.NORTH, routePanel);
-		//sl_routePanel.putConstraint(SpringLayout.WEST, p3, 3, SpringLayout.HORIZONTAL_CENTER, routePanel);
+		sl_routePanel.putConstraint(SpringLayout.WEST, p3, 3, SpringLayout.HORIZONTAL_CENTER, routePanel);
 		sl_routePanel.putConstraint(SpringLayout.SOUTH, p3, -6, SpringLayout.NORTH, this.starSearch);
 		sl_routePanel.putConstraint(SpringLayout.EAST, p3, -10, SpringLayout.EAST, routePanel);
 		routePanel.add(p3);
