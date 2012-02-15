@@ -32,9 +32,14 @@ public class StarMapPanel extends JPanel {
 			for (Star s : this.stars) {
 				if (this.highlight == s) {
 					g.setColor(Color.green);
-				}
-				else {
-					g2.setColor(Color.white);
+				}else if(s.getName().charAt(0) == 'A'){
+					g.setColor(new Color(255,255,255));
+				}else if(s.getName().charAt(0) == 'B'){
+					g.setColor(new Color(200,200,200));
+				}else if(s.getName().charAt(0) == 'C'){
+					g.setColor(new Color(150,150,150));
+				} else {
+					g.setColor(new Color(100,100,100));
 				}
 				g2.fillOval((int)(s.getPosition().x-2), (int)(s.getPosition().y-2), 4, 4);
 			}

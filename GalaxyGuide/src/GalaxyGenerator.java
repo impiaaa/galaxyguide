@@ -3,7 +3,7 @@ import java.util.TreeSet;
 
 
 public class GalaxyGenerator {
-	private static final double STARS_PER_KILOPARSEC = 0.25;
+	private static final double STARS_PER_KILOPARSEC = 0.001;
 	
 	private Random rand;
 	private Octree octree;
@@ -17,7 +17,7 @@ public class GalaxyGenerator {
 	public GalaxyGenerator(int seed){
 		rand = new Random(seed);
 		
-		octree = new Octree(4,rand.nextFloat()*50);
+		octree = new Octree(4,1024);
 	}
 	
 	/**
