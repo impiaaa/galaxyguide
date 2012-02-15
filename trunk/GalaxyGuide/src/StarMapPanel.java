@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 public class StarMapPanel extends JPanel {
 	private Iterable<Star> stars;
 	private Star highlight;
+	private Iterable<Star> path;
 	/**
 	 * TODO Put here a description of what this constructor does.
 	 *
@@ -44,6 +45,17 @@ public class StarMapPanel extends JPanel {
 				g2.fillOval((int)(s.getPosition().x-2), (int)(s.getPosition().y-2), 4, 4);
 			}
 		}
+		g2.setColor(Color.white);
+		if (this.path != null) {
+			Vector3D<Double> last = null;
+			for (Star s : this.path) {
+				if (last == null) {
+					last = s.getPosition();
+					continue;
+				}
+				g2.drawLine(last.x.intValue(), last.y.intValue(), s.getPosition().x.intValue(), s.getPosition().y.intValue());
+			}
+		}
 	}
 	/**
 	 * Returns the value of the field called 'highlight'.
@@ -58,5 +70,19 @@ public class StarMapPanel extends JPanel {
 	 */
 	public void setHighlight(Star highlight) {
 		this.highlight = highlight;
+	}
+	/**
+	 * Returns the value of the field called 'path'.
+	 * @return Returns the path.
+	 */
+	public Iterable<Star> getPath() {
+		return this.path;
+	}
+	/**
+	 * Sets the field called 'path' to the given value.
+	 * @param path The path to set.
+	 */
+	public void setPath(Iterable<Star> path) {
+		this.path = path;
 	}
 }

@@ -239,8 +239,12 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 			switch (this.tabbedPane.getSelectedIndex()) {
 			case 0:
 				// Trip planner
+				break;
 			case 1:
 				// Path search
+				AStarSearch search = new AStarSearch((Star)this.fromList.getSelectedValue(), (Star)this.toList.getSelectedValue());
+				AStarSearch.State state = search.search();
+				this.canvas.setPath(state.getPath());
 			}
 		}
 		else if (arg0.getSource() == this.btnFindTrips) {
@@ -251,9 +255,6 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 			plan.compileTrips(s, r);
 			this.tripModel = new FilteredListModel<Trip>(plan.getPossibleTrips());
 			this.tripList.setModel(this.tripModel);
-			
-			
-			
 		}
 	}
 }
