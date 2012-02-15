@@ -9,6 +9,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 import java.util.TreeSet;
 
 
@@ -21,7 +22,7 @@ import java.util.TreeSet;
 public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, ActionListener {
 	private JFrame frmGuideToThe;
 	private FilteredListModel<Star> starModel;
-	private FilteredListModel<String> tripModel;
+	private FilteredListModel<Trip> tripModel;
 	private JList fromList;
 	private JList toList;
 	private JList tripList;
@@ -30,6 +31,9 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 	private StarMapPanel canvas;
 	private JTabbedPane tabbedPane;
 	private JList starTripList;
+	private JButton btnGo;
+	private JButton btnFindTrips;
+	private JSlider rangeSlider;
 
 	/**
 	 * Launch the application.
@@ -60,12 +64,11 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		TripPlanner tp = new TripPlanner();
-		this.tripModel = new FilteredListModel<String>(new ArrayList<String>());
-
-		GalaxyGenerator gen = new GalaxyGenerator((int) System.currentTimeMillis());
-		gen.genStars();
-		TreeSet<Star> stars = gen.getBinaryTree();
+		GalaxyGenerator galGen = new GalaxyGenerator((int) System.currentTimeMillis());
+		galGen.genStars();
+		TreeSet<Star> stars = galGen.getBinaryTree();
+		ConnectionGenerator conGen = new ConnectionGenerator();
+		conGen.generateConnectionRange(stars);
 		this.starModel = new FilteredListModel<Star>(stars);
 
 		this.frmGuideToThe = new JFrame();
@@ -97,12 +100,12 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 		sl_starMapPanel.putConstraint(SpringLayout.WEST, starMapLabel, 6, SpringLayout.WEST, starMapPanel);
 		starMapPanel.add(starMapLabel);
 		
-		JButton btnGo = new JButton("Go!");
-		btnGo.addActionListener(this);
-		sl_starMapPanel.putConstraint(SpringLayout.NORTH, starMapPane, 6, SpringLayout.SOUTH, btnGo);
-		sl_starMapPanel.putConstraint(SpringLayout.NORTH, btnGo, 6, SpringLayout.NORTH, starMapPanel);
-		sl_starMapPanel.putConstraint(SpringLayout.EAST, btnGo, -6, SpringLayout.EAST, starMapPanel);
-		starMapPanel.add(btnGo);
+		this.btnGo = new JButton("Go!");
+		this.btnGo.addActionListener(this);
+		sl_starMapPanel.putConstraint(SpringLayout.NORTH, starMapPane, 6, SpringLayout.SOUTH, this.btnGo);
+		sl_starMapPanel.putConstraint(SpringLayout.NORTH, this.btnGo, 6, SpringLayout.NORTH, starMapPanel);
+		sl_starMapPanel.putConstraint(SpringLayout.EAST, this.btnGo, -6, SpringLayout.EAST, starMapPanel);
+		starMapPanel.add(this.btnGo);
 		
 		this.tabbedPane = new JTabbedPane(SwingConstants.TOP);
 		splitPane.setLeftComponent(this.tabbedPane);
@@ -117,23 +120,26 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 		sl_tripPanel.putConstraint(SpringLayout.WEST, rangeLabel, 10, SpringLayout.WEST, tripPanel);
 		tripPanel.add(rangeLabel);
 		
-		JSlider rangeSlider = new JSlider();
-		sl_tripPanel.putConstraint(SpringLayout.SOUTH, rangeLabel, 0, SpringLayout.SOUTH, rangeSlider);
-		sl_tripPanel.putConstraint(SpringLayout.NORTH, rangeSlider, 10, SpringLayout.NORTH, tripPanel);
-		sl_tripPanel.putConstraint(SpringLayout.WEST, rangeSlider, 6, SpringLayout.EAST, rangeLabel);
-		tripPanel.add(rangeSlider);
+		this.rangeSlider = new JSlider();
+		this.rangeSlider.setMinimum(0);
+		this.rangeSlider.setMaximum(1024);
+		this.rangeSlider.setValue(512);
+		sl_tripPanel.putConstraint(SpringLayout.SOUTH, rangeLabel, 0, SpringLayout.SOUTH, this.rangeSlider);
+		sl_tripPanel.putConstraint(SpringLayout.NORTH, this.rangeSlider, 10, SpringLayout.NORTH, tripPanel);
+		sl_tripPanel.putConstraint(SpringLayout.WEST, this.rangeSlider, 6, SpringLayout.EAST, rangeLabel);
+		tripPanel.add(this.rangeSlider);
 		
-		JButton btnFindTrips = new JButton("Find trips");
-		sl_tripPanel.putConstraint(SpringLayout.EAST, rangeSlider, -6, SpringLayout.WEST, btnFindTrips);
-		sl_tripPanel.putConstraint(SpringLayout.NORTH, btnFindTrips, 10, SpringLayout.NORTH, tripPanel);
-		sl_tripPanel.putConstraint(SpringLayout.EAST, btnFindTrips, -10, SpringLayout.EAST, tripPanel);
-		tripPanel.add(btnFindTrips);
+		this.btnFindTrips = new JButton("Find trips");
+		this.btnFindTrips.addActionListener(this);
+		sl_tripPanel.putConstraint(SpringLayout.EAST, this.rangeSlider, -6, SpringLayout.WEST, this.btnFindTrips);
+		sl_tripPanel.putConstraint(SpringLayout.NORTH, this.btnFindTrips, 10, SpringLayout.NORTH, tripPanel);
+		sl_tripPanel.putConstraint(SpringLayout.EAST, this.btnFindTrips, -10, SpringLayout.EAST, tripPanel);
+		tripPanel.add(this.btnFindTrips);
 		
-		this.tripList = new JList(this.tripModel);
-		this.starTripList = new JList();
-		this.starTripList.setModel(this.starModel);
+		this.tripList = new JList();
+		this.starTripList = new JList(this.starModel);
 		JScrollPane s1 = new JScrollPane(this.starTripList);
-		sl_tripPanel.putConstraint(SpringLayout.NORTH, s1, 6, SpringLayout.SOUTH, btnFindTrips);
+		sl_tripPanel.putConstraint(SpringLayout.NORTH, s1, 6, SpringLayout.SOUTH, this.btnFindTrips);
 		sl_tripPanel.putConstraint(SpringLayout.WEST, s1, 10, SpringLayout.WEST, tripPanel);
 		sl_tripPanel.putConstraint(SpringLayout.EAST, s1, -10, SpringLayout.EAST, tripPanel);
 		sl_tripPanel.putConstraint(SpringLayout.SOUTH, s1, -6, SpringLayout.VERTICAL_CENTER, tripPanel);
@@ -209,8 +215,10 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 			this.starModel.update();
 		}
 		else {
-			this.tripModel.setFilter(this.tripSearch.getText());
-			this.tripModel.update();
+			if (this.tripModel != null) {
+				this.tripModel.setFilter(this.tripSearch.getText());
+				this.tripModel.update();
+			}
 		}
 	}
 
@@ -219,19 +227,33 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 		if (arg0.getValueIsAdjusting()) {
 			return;
 		}
-		Star s = this.starModel.getElementAt(arg0.getLastIndex());
+		Star s = (Star) ((JList)arg0.getSource()).getSelectedValue();
 		this.canvas.setHighlight(s);
 		this.canvas.repaint();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// Go button clicked
-		switch (this.tabbedPane.getSelectedIndex()) {
-		case 0:
-			// Trip planner
-		case 1:
-			// Path search
+		if (arg0.getSource() == this.btnGo) {
+			// Go button clicked
+			switch (this.tabbedPane.getSelectedIndex()) {
+			case 0:
+				// Trip planner
+			case 1:
+				// Path search
+			}
+		}
+		else if (arg0.getSource() == this.btnFindTrips) {
+			Star s = (Star) this.starTripList.getSelectedValue();
+			double r = this.rangeSlider.getValue();
+			
+			TripPlanner plan = new TripPlanner();
+			plan.compileTrips(s, r);
+			this.tripModel = new FilteredListModel<Trip>(plan.getPossibleTrips());
+			this.tripList.setModel(this.tripModel);
+			
+			
+			
 		}
 	}
 }

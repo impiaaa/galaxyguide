@@ -24,7 +24,7 @@ public class TripPlanner {
 	 *
 	 */
 	public TripPlanner(){
-		
+		this.possibleTrips = new PriorityQueue<Trip> ();
 	}
 	
 	public PriorityQueue<Trip> getPossibleTrips(){
