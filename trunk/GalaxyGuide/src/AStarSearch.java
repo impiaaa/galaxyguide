@@ -59,6 +59,7 @@ public class AStarSearch {
 			this.path.addAll(prev_path);
 			this.path.add(curr);
 			this.cost = new_cost;
+			this.heuristic = new DistanceHeuristic();
 			// Add things as needed
 		}
 
