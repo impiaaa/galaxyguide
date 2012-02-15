@@ -41,11 +41,29 @@ public class TripPlanner {
 		this.startingPoint = startingPoint;
 		this.maxCost = maxCost;
 		
+		System.out.println("Max Cost Is...");
+		System.out.println(maxCost);
+		
 		LinkedList<Connection> tripSoFar = new LinkedList<Connection>();
 		tripSoFar.add(new Connection(startingPoint, 0.));
 		
-		this.getTrips(tripSoFar, 0., 0, new LinkedList<String>(), startingPoint);
-				
+		TreeSet<Star> starsPassed = new TreeSet<Star>();
+		starsPassed.add(startingPoint);
+		
+		this.getTrips(tripSoFar, 0., 0, new LinkedList<String>(), startingPoint, starsPassed);
+		
+		Iterator<Trip> tripIterator = this.possibleTrips.iterator();
+		
+		int num = 1;
+		
+		while(tripIterator.hasNext()){
+			Trip curTrip = tripIterator.next();
+			
+			curTrip.setName("Trip " + num);
+			
+			num++;
+			
+		}	
 	}
 
 	
@@ -57,11 +75,15 @@ public class TripPlanner {
 	 * @param maxCost
 	 * @return
 	 */
-	private void getTrips(LinkedList<Connection> tripSoFar, double costSoFar, int attractionSoFar, LinkedList<String> attractionsSoFar, Star curStar) {
+	private void getTrips(LinkedList<Connection> tripSoFar, double costSoFar, int attractionSoFar, LinkedList<String> attractionsSoFar, Star curStar, TreeSet<Star> starsPassed) {
 		// TODO Auto-generated method stub.
 		
-		attractionSoFar += curStar.getInterestLevel();
-		attractionsSoFar.addAll(curStar.getAttractions());
+		if (!starsPassed.contains(curStar)){
+			attractionSoFar += curStar.getInterestLevel();
+			attractionsSoFar.addAll(curStar.getAttractions());
+		}
+		
+		starsPassed.add(curStar);
 		
 		if (curStar == this.startingPoint){
 			// add this trip
@@ -105,7 +127,7 @@ public class TripPlanner {
 				newConnectionList.add(connector);
 				
 				
-				this.getTrips(newConnectionList, costSoFar + connectionCost, attractionSoFar, attractionsSoFar, connectingTo);
+				this.getTrips(newConnectionList, costSoFar + connectionCost, attractionSoFar, attractionsSoFar, connectingTo, starsPassed);
 			}
 			
 		}
