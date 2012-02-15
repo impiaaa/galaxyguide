@@ -17,6 +17,7 @@ public class ConnectionGenerator {
 				if(distance > j.getRange()) {
 					double time = distance / j.getRange();
 					Connection cont = new Connection(j,time);
+					cont.setDistance(distance);
 					i.addConnection(cont);
 				}
 			}
