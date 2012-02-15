@@ -81,7 +81,7 @@ public class Octree {
 
 		public boolean add(Star e) {
 			list.add(e);
-			return false;
+			return true;
 		}
 
 		public boolean insert(Star e, int level) {
