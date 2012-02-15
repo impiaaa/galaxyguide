@@ -239,12 +239,14 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 			switch (this.tabbedPane.getSelectedIndex()) {
 			case 0:
 				// Trip planner
+				this.tripList.getSelectedValue();
 				break;
 			case 1:
 				// Path search
 				AStarSearch search = new AStarSearch((Star)this.fromList.getSelectedValue(), (Star)this.toList.getSelectedValue());
 				AStarSearch.State state = search.search();
 				this.canvas.setPath(state.getPath());
+				this.canvas.repaint();
 			}
 		}
 		else if (arg0.getSource() == this.btnFindTrips) {
