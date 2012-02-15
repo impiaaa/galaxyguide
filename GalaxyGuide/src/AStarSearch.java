@@ -151,6 +151,22 @@ public class AStarSearch {
 			sb.append(']');
 			return sb.toString();
 		}
+
+		/**
+		 * Returns the value of the field called 'path'.
+		 * @return Returns the path.
+		 */
+		public LinkedList<Star> getPath() {
+			return this.path;
+		}
+
+		/**
+		 * Sets the field called 'path' to the given value.
+		 * @param path The path to set.
+		 */
+		public void setPath(LinkedList<Star> path) {
+			this.path = path;
+		}
 	}
 
 	/**
