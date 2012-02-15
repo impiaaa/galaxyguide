@@ -6,20 +6,32 @@ import java.util.TreeSet;
 /**
  * TODO Put here a description of what this class does.
  *
- * @author localmgr.
+ * @author Brandon Cox
  *         Created Feb 12, 2012.
  */
 public class Trip implements Comparable<Trip> {
 
-	private LinkedList<Connection> connections;
+	private LinkedList<Star> connections;
 	private double totalCost;
 	private int totalAttraction;
 	private LinkedList<String> attractions;
+	private String name;
 
 	
 	public Trip(LinkedList<Connection> connections, double totalCost, int totalAttraction, LinkedList<String> attractions){
 		
-		this.connections = connections;
+		LinkedList<Star> starList = new LinkedList<Star>();
+		
+		Iterator<Connection> connectionIterator = connections.iterator();
+		
+		while(connectionIterator.hasNext()){
+			Connection con = connectionIterator.next();
+			
+			starList.add(con.getTarget());
+			
+		}
+		
+		this.connections = starList;
 		this.totalAttraction = totalAttraction;
 		this.totalCost = totalCost;
 		this.attractions = attractions;
@@ -75,7 +87,7 @@ public class Trip implements Comparable<Trip> {
 	 * Returns the value of the field called 'connections'.
 	 * @return Returns the connections.
 	 */
-	public LinkedList<Connection> getConnections() {
+	public LinkedList<Star> getConnections() {
 		return connections;
 	}
 
@@ -83,7 +95,7 @@ public class Trip implements Comparable<Trip> {
 	 * Sets the field called 'connections' to the given value.
 	 * @param connections The connections to set.
 	 */
-	public void setConnections(LinkedList<Connection> connections) {
+	public void setConnections(LinkedList<Star> connections) {
 		this.connections = connections;
 	}
 
@@ -102,4 +114,15 @@ public class Trip implements Comparable<Trip> {
 	public void setAttractions(LinkedList<String> attractions) {
 		this.attractions = attractions;
 	}
+	
+	public void setName(String name){
+		this.name = name;
+	}
+	
+	public String toString(){
+		
+		return this.name + " (Cost = " + this.totalCost + " Attraction = " + this.totalAttraction + " )";
+		
+	}
+	
 }
