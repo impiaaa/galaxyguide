@@ -15,6 +15,23 @@ public class AStarSearch {
 	private PriorityQueue<State> openset;
 
 	/**
+	 * The Heuristic for distance
+	 * 
+	 * @author niz. Created Feb 15, 2012.
+	 */
+	public class DistanceHeuristic implements Heuristic {
+		@Override
+		public double hfunction(Star start, Star goal) {
+			return Math.sqrt(Math.pow(
+					(start.getPosition().x - goal.getPosition().x), 2)
+					+ Math.pow((start.getPosition().y - goal.getPosition().y),
+							2)
+					+ Math.pow((start.getPosition().z - goal.getPosition().z),
+							2));
+		}
+	}
+
+	/**
 	 * The state class for search
 	 * 
 	 * @author niz. Created Feb 13, 2012.
@@ -27,6 +44,7 @@ public class AStarSearch {
 		private Star star;
 		private LinkedList<Star> path;
 		private double cost;
+		private Heuristic heuristic;
 
 		/**
 		 * Constructor
@@ -54,31 +72,15 @@ public class AStarSearch {
 		}
 
 		/**
-		 * Return the heurisitc value
-		 * 
-		 * @return
-		 */
-		double h_score() {
-			return Math.sqrt(Math.pow(
-					(this.star.getPosition().x - AStarSearch.this.goal
-							.getPosition().x), 2)
-					+ Math.pow(
-							(this.star.getPosition().y - AStarSearch.this.goal
-									.getPosition().y), 2)
-					+ Math.pow(
-							(this.star.getPosition().z - AStarSearch.this.goal
-									.getPosition().z), 2));
-
-		}
-
-		/**
 		 * returns the total cost to reach goal. This is cost thus far plus the
 		 * heurisitc estimate
 		 * 
 		 * @return
 		 */
 		double f_score() {
-			return g_score() + h_score();
+			return g_score()
+					+ this.heuristic
+							.hfunction(this.star, AStarSearch.this.goal);
 		}
 
 		/**
@@ -100,7 +102,6 @@ public class AStarSearch {
 
 			}
 		}
-		
 
 		/**
 		 * returns true iff this is the goal state
@@ -154,6 +155,7 @@ public class AStarSearch {
 
 		/**
 		 * Returns the value of the field called 'path'.
+		 * 
 		 * @return Returns the path.
 		 */
 		public LinkedList<Star> getPath() {
@@ -162,10 +164,31 @@ public class AStarSearch {
 
 		/**
 		 * Sets the field called 'path' to the given value.
-		 * @param path The path to set.
+		 * 
+		 * @param path
+		 *            The path to set.
 		 */
 		public void setPath(LinkedList<Star> path) {
 			this.path = path;
+		}
+
+		/**
+		 * Returns the value of the field called 'heuristic'.
+		 * 
+		 * @return Returns the heuristic.
+		 */
+		public Heuristic getHeuristic() {
+			return this.heuristic;
+		}
+
+		/**
+		 * Sets the field called 'heuristic' to the given value.
+		 * 
+		 * @param heuristic
+		 *            The heuristic to set.
+		 */
+		public void setHeuristic(Heuristic heuristic) {
+			this.heuristic = heuristic;
 		}
 	}
 
