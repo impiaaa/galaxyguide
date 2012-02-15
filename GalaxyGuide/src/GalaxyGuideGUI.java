@@ -220,7 +220,6 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 			return;
 		}
 		Star s = this.starModel.getElementAt(arg0.getLastIndex());
-		System.out.println("Selected: "+s.toString());
 		this.canvas.setHighlight(s);
 		this.canvas.repaint();
 	}
