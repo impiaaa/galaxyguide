@@ -216,7 +216,12 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 
 	@Override
 	public void valueChanged(ListSelectionEvent arg0) {
-		this.canvas.setHighlight(this.starModel.getElementAt(arg0.getFirstIndex()));
+		if (arg0.getValueIsAdjusting()) {
+			return;
+		}
+		Star s = this.starModel.getElementAt(arg0.getLastIndex());
+		System.out.println("Selected: "+s.toString());
+		this.canvas.setHighlight(s);
 		this.canvas.repaint();
 	}
 
