@@ -47,13 +47,13 @@ public class StarMapPanel extends JPanel {
 		}
 		g2.setColor(Color.white);
 		if (this.path != null) {
-			Vector3D<Double> last = null;
+			Vector3D last = null;
 			for (Star s : this.path) {
 				if (last == null) {
 					last = s.getPosition();
 					continue;
 				}
-				g2.drawLine(last.x.intValue(), last.y.intValue(), s.getPosition().x.intValue(), s.getPosition().y.intValue());
+				g2.drawLine((int)last.x, (int)last.y, (int)s.getPosition().x, (int)s.getPosition().y);
 				last = s.getPosition();
 			}
 		}

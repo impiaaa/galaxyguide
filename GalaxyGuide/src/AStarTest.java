@@ -22,11 +22,11 @@ public class AStarTest {
 		Star D = new Star("D");
 		Star E = new Star("E");
 		
-		A.setPosition(new Vector3D<Double>(3.0,4.0,5.0));
-		B.setPosition(new Vector3D<Double>(14.0,5.0,6.0));
-		C.setPosition(new Vector3D<Double>(1.0,3.0,17.0));
-		D.setPosition(new Vector3D<Double>(11.0,24.0,36.0));
-		E.setPosition(new Vector3D<Double>(15.0,4.0,5.0));
+		A.setPosition(new Vector3D(3.0,4.0,5.0));
+		B.setPosition(new Vector3D(14.0,5.0,6.0));
+		C.setPosition(new Vector3D(1.0,3.0,17.0));
+		D.setPosition(new Vector3D(11.0,24.0,36.0));
+		E.setPosition(new Vector3D(15.0,4.0,5.0));
 		
 		A.addConnection(new Connection(B,cost(A,B)));
 		A.addConnection(new Connection(C,cost(A,C)));

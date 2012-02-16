@@ -31,7 +31,7 @@ public class GalaxyGenerator {
 		
 		for(int i = 0; i < octree.depth; i++){
 			for(int j = 0; j < ((Math.pow(8,i))*STARS_PER_KILOPARSEC*octree.size);j++){
-				Vector3D<Double> pos = new Vector3D<Double>(rand.nextDouble()*octree.size,rand.nextDouble()*octree.size,rand.nextDouble()*octree.size);
+				Vector3D pos = new Vector3D(rand.nextDouble()*octree.size,rand.nextDouble()*octree.size,rand.nextDouble()*octree.size);
 				Star e = new Star((char)(i+65)+""+pos.toString());
 				e.setRange(50*(5-i)+rand.nextDouble()*3);
 				e.setPosition(pos);
