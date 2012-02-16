@@ -15,9 +15,8 @@ public class ConnectionGenerator {
 						                   +(j.getPosition().y-i.getPosition().y)*(j.getPosition().y-i.getPosition().y)
 						                   +(j.getPosition().z-i.getPosition().z)*(j.getPosition().z-i.getPosition().z));
 				if(distance <= j.getRange()) {
-					double time = distance / j.getRange();
+					double time = distance;
 					Connection cont = new Connection(j,time);
-					cont.setDistance(distance);
 					i.addConnection(cont);
 				}
 			}
