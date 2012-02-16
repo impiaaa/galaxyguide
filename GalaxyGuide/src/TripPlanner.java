@@ -41,10 +41,7 @@ public class TripPlanner {
 		this.attractionMap = new HashMap<String, PriorityQueue<Trip>>();
 		this.startingPoint = startingPoint;
 		this.maxCost = maxCost;
-		
-		System.out.println("Max Cost Is...");
-		System.out.println(maxCost);
-		
+				
 		LinkedList<Connection> tripSoFar = new LinkedList<Connection>();
 		tripSoFar.add(new Connection(startingPoint, 0.));
 		
@@ -59,9 +56,7 @@ public class TripPlanner {
 		
 		while(tripIterator.hasNext()){
 			Trip curTrip = tripIterator.next();
-			
-			System.out.println(curTrip.getTotalAttraction());
-			
+						
 			curTrip.setName("Trip " + num);
 			
 			num++;
@@ -92,8 +87,6 @@ public class TripPlanner {
 		
 		if (curStar == this.startingPoint){
 			// add this trip
-			System.out.println("Adding Trip!");
-			System.out.println(attractionSoFar);
 			Trip tripToHere = new Trip(tripSoFar, costSoFar, attractionSoFar, attractionsSoFar);
 			
 			// We need to iterate through the attractions list here and add this new trip to all the correct hashMap entries.
