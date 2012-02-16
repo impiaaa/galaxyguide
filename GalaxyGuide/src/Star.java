@@ -85,6 +85,10 @@ public class Star implements Comparable<Star> {
 		this.attractions.add(attraction);
 	}
 	
+	public void setAttractions(LinkedList<String> a){
+		this.attractions = a;
+	}
+	
 	/**
 	 * TODO Put here a description of what this method does.
 	 *
