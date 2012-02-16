@@ -38,6 +38,7 @@ public class TripPlanner {
 	
 	public void compileTrips(Star startingPoint, double maxCost){
 		
+		this.attractionMap = new HashMap<String, PriorityQueue<Trip>>();
 		this.startingPoint = startingPoint;
 		this.maxCost = maxCost;
 		
@@ -59,6 +60,8 @@ public class TripPlanner {
 		while(tripIterator.hasNext()){
 			Trip curTrip = tripIterator.next();
 			
+			System.out.println(curTrip.getTotalAttraction());
+			
 			curTrip.setName("Trip " + num);
 			
 			num++;
@@ -79,7 +82,9 @@ public class TripPlanner {
 		// TODO Auto-generated method stub.
 		
 		if (!starsPassed.contains(curStar)){
-			attractionSoFar += curStar.getInterestLevel();
+			System.out.println("Adding Interest");
+			attractionSoFar = curStar.getInterestLevel() + attractionSoFar;
+			System.out.println(curStar.getInterestLevel());
 			attractionsSoFar.addAll(curStar.getAttractions());
 		}
 		
@@ -87,6 +92,8 @@ public class TripPlanner {
 		
 		if (curStar == this.startingPoint){
 			// add this trip
+			System.out.println("Adding Trip!");
+			System.out.println(attractionSoFar);
 			Trip tripToHere = new Trip(tripSoFar, costSoFar, attractionSoFar, attractionsSoFar);
 			
 			// We need to iterate through the attractions list here and add this new trip to all the correct hashMap entries.
@@ -104,6 +111,7 @@ public class TripPlanner {
 				else{
 					tripList = new PriorityQueue<Trip>();
 				}
+				
 				
 				tripList.add(tripToHere);
 				
@@ -127,7 +135,7 @@ public class TripPlanner {
 				newConnectionList.add(connector);
 				
 				
-				this.getTrips(newConnectionList, costSoFar + connectionCost, attractionSoFar, attractionsSoFar, connectingTo, starsPassed);
+				this.getTrips(newConnectionList, costSoFar + connectionCost, attractionSoFar, attractionsSoFar, connectingTo, (TreeSet<Star>)starsPassed.clone());
 			}
 			
 		}

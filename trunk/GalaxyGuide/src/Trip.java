@@ -121,7 +121,7 @@ public class Trip implements Comparable<Trip> {
 	
 	public String toString(){
 		
-		return this.name + " (Cost = " + this.totalCost + " Attraction = " + this.totalAttraction + " )";
+		return this.name + " (Cost = " + (int)this.totalCost + " Attraction = " + this.totalAttraction + " NumStars = " + this.connections.size() + " )";
 		
 	}
 	
