@@ -134,8 +134,8 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 		
 		this.rangeSlider = new JSlider();
 		this.rangeSlider.setMinimum(0);
-		this.rangeSlider.setMaximum(1024);
-		this.rangeSlider.setValue(512);
+		this.rangeSlider.setMaximum(50);
+		this.rangeSlider.setValue(25);
 		sl_tripPanel.putConstraint(SpringLayout.SOUTH, rangeLabel, 0, SpringLayout.SOUTH, this.rangeSlider);
 		sl_tripPanel.putConstraint(SpringLayout.NORTH, this.rangeSlider, 10, SpringLayout.NORTH, tripPanel);
 		sl_tripPanel.putConstraint(SpringLayout.WEST, this.rangeSlider, 6, SpringLayout.EAST, rangeLabel);
