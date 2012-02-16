@@ -38,7 +38,7 @@ public class GalaxyGenerator {
 				
 				// Attraction Generator Stuff
 				e.setAttractions(AttractionGenerator.getAttractions());
-				e.setInterestLevel((int)((Math.random() * 10) + 1));
+				e.setInterestLevel((int)(rand.nextDouble() * 10) + 1);
 				// Not Attraction Generator Stuff
 				
 				octree.insert(e, i);
