@@ -9,7 +9,7 @@ import java.util.LinkedList;
 
 public class Star implements Comparable<Star> {
 	private String name;
-	private Vector3D<Double> position;
+	private Vector3D position;
 	private LinkedList<Connection> connections;
 	private int interestLevel;
 	private LinkedList<String> attractions;
@@ -22,7 +22,7 @@ public class Star implements Comparable<Star> {
 	 */
 	public Star(String name){
 		this.setName(name);
-		this.setPosition(new Vector3D<Double>(0.,0.,0.));
+		this.setPosition(new Vector3D(0.,0.,0.));
 		this.connections = new LinkedList<Connection>();
 		this.attractions = new LinkedList<String>();
 		
@@ -48,7 +48,7 @@ public class Star implements Comparable<Star> {
 	 * Returns the value of the field called 'position'.
 	 * @return Returns the position.
 	 */
-	public Vector3D<Double> getPosition() {
+	public Vector3D getPosition() {
 		return this.position;
 	}
 
@@ -56,7 +56,7 @@ public class Star implements Comparable<Star> {
 	 * Sets the field called 'position' to the given value.
 	 * @param position The position to set.
 	 */
-	public void setPosition(Vector3D<Double> position) {
+	public void setPosition(Vector3D position) {
 		this.position = position;
 	}
 

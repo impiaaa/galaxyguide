@@ -52,16 +52,16 @@ public class Octree {
 	}
 	
 	private class octNode{
-		final Vector3D<Double> loc;
-		final Vector3D<Double> bnd;
+		final Vector3D loc;
+		final Vector3D bnd;
 		final int level;
 		octNode[] children = new octNode[8];
 		LinkedList<Star> list = new LinkedList<Star>();
 		
 		public octNode(int level,double x, double y, double z){
 			double mySize = size/(2^level);
-			loc = new Vector3D<Double>(x,y,z);
-			bnd = new Vector3D<Double>(x+mySize,y+mySize,z+mySize);
+			loc = new Vector3D(x,y,z);
+			bnd = new Vector3D(x+mySize,y+mySize,z+mySize);
 			this.level = level;
 			if(this.level <= Octree.this.depth){
 				//create subChildren at proper locations
