@@ -260,8 +260,13 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 				// Path search
 				AStarSearch search = new AStarSearch((Star)this.fromList.getSelectedValue(), (Star)this.toList.getSelectedValue());
 				AStarSearch.State state = search.search();
-				this.canvas.setPath(state.getPath());
-				this.canvas.repaint();
+				if (state == null) {
+					JOptionPane.showMessageDialog(this.frmGuideToThe, "No path found", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+					this.canvas.setPath(state.getPath());
+					this.canvas.repaint();
+				}
 			}
 		}
 		else if (arg0.getSource() == this.btnFindTrips) {
