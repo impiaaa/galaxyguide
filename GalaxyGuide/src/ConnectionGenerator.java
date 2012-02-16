@@ -14,7 +14,7 @@ public class ConnectionGenerator {
 				double distance = Math.sqrt((j.getPosition().x-i.getPosition().x)*(j.getPosition().x-i.getPosition().x)
 						                   +(j.getPosition().y-i.getPosition().y)*(j.getPosition().y-i.getPosition().y)
 						                   +(j.getPosition().z-i.getPosition().z)*(j.getPosition().z-i.getPosition().z));
-				if(distance > j.getRange()) {
+				if(distance <= j.getRange()) {
 					double time = distance / j.getRange();
 					Connection cont = new Connection(j,time);
 					cont.setDistance(distance);
