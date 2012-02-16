@@ -25,8 +25,9 @@ public class GalaxyGenerator {
 	 * new stars will not be in the same positions as the old ones.
 	 */
 	public void genStars(){
-		
+		// Attraction Generator Stuff
 		AttractionGenerator.compileAttractions();
+		// Not Attraction Generator Stuff
 		
 		for(int i = 0; i < octree.depth; i++){
 			for(int j = 0; j < ((Math.pow(8,i))*STARS_PER_KILOPARSEC*octree.size);j++){
@@ -36,10 +37,8 @@ public class GalaxyGenerator {
 				e.setPosition(pos);
 				
 				// Attraction Generator Stuff
-				
 				e.setAttractions(AttractionGenerator.getAttractions());
 				e.setInterestLevel((int)((Math.random() * 10) + 1));
-				
 				// Not Attraction Generator Stuff
 				
 				octree.insert(e, i);
