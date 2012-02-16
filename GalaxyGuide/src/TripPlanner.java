@@ -117,7 +117,7 @@ public class TripPlanner {
 		while(connectionIterator.hasNext()){
 			Connection connector = connectionIterator.next();
 			double connectionCost = connector.getCost();
-			
+						
 			if (costSoFar + connectionCost < this.maxCost){
 				
 				Star connectingTo = connector.getTarget();
