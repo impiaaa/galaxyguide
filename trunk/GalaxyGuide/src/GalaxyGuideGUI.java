@@ -114,6 +114,7 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 		
 		this.btnGo = new JButton("Go!");
 		this.btnGo.addActionListener(this);
+		this.btnGo.setMnemonic('G');
 		sl_starMapPanel.putConstraint(SpringLayout.NORTH, starMapPane, 6, SpringLayout.SOUTH, this.btnGo);
 		sl_starMapPanel.putConstraint(SpringLayout.NORTH, this.btnGo, 6, SpringLayout.NORTH, starMapPanel);
 		sl_starMapPanel.putConstraint(SpringLayout.EAST, this.btnGo, -6, SpringLayout.EAST, starMapPanel);
