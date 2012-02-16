@@ -77,9 +77,7 @@ public class TripPlanner {
 		// TODO Auto-generated method stub.
 		
 		if (!starsPassed.contains(curStar)){
-			System.out.println("Adding Interest");
 			attractionSoFar = curStar.getInterestLevel() + attractionSoFar;
-			System.out.println(curStar.getInterestLevel());
 			attractionsSoFar.addAll(curStar.getAttractions());
 		}
 		
