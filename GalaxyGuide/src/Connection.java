@@ -9,7 +9,6 @@
 public class Connection {
 	private Star target;
 	private double cost;
-	private double distance;
 
 	/**
 	 * TODO Put here a description of what this constructor does.
@@ -58,13 +57,5 @@ public class Connection {
 	 */
 	public void setCost(double cost) {
 		this.cost = cost;
-	}
-
-	public double getDistance() {
-		return distance;
-	}
-
-	public void setDistance(double distance) {
-		this.distance = distance;
 	}
 }
