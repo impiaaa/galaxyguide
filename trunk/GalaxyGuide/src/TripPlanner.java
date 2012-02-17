@@ -1,6 +1,7 @@
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Map.Entry;
 import java.util.PriorityQueue;
 import java.util.TreeSet;
 
@@ -49,8 +50,28 @@ public class TripPlanner {
 	 *
 	 * @return a hashmap of all possible trips
 	 */
-	public HashMap<String, PriorityQueue<Trip>> getAttractionMap(){
-		return this.attractionMap;
+	public HashMap<String, LinkedList<Trip>> getAttractionMap(){
+		
+		HashMap<String, LinkedList<Trip>> mapList = new HashMap<String, LinkedList<Trip>>();
+		
+		Iterator<Entry<String, PriorityQueue<Trip>>> queueIterator = this.attractionMap.entrySet().iterator();
+		
+		while(queueIterator.hasNext()){
+			Entry<String, PriorityQueue<Trip>> ent = queueIterator.next();
+			
+			LinkedList<Trip> tripList = new LinkedList<Trip>();
+			PriorityQueue<Trip> tripPile = ent.getValue();
+			
+			while(tripPile.size() > 0){
+				tripList.add(tripPile.poll());
+			}
+			
+			mapList.put(ent.getKey(), tripList);
+		}
+		
+		
+		
+		return mapList;
 	}
 	
 	/**
@@ -83,9 +104,7 @@ public class TripPlanner {
 			Trip curTrip = tripIterator.next();
 						
 			curTrip.setName("Trip " + num);
-			
-			System.out.println(curTrip.getAttractions());
-			
+						
 			num++;
 			
 		}	
@@ -111,6 +130,7 @@ public class TripPlanner {
 		
 		if (curStar == this.startingPoint){
 			// add this trip
+			
 			Trip tripToHere = new Trip(tripSoFar, costSoFar, attractionSoFar, attractionsSoFar);
 			
 			// We need to iterate through the attractions list here and add this new trip to all the correct hashMap entries.
