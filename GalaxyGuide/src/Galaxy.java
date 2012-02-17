@@ -2,16 +2,16 @@ import java.util.TreeSet;
 
 
 /**
- * TODO Put here a description of what this class does.
+ * A galaxy that holds stars.
  *
- * @author localmgr.
+ * @author Brandon Cox
  *         Created Feb 8, 2012.
  */
 public class Galaxy {
 	private TreeSet<Star> stars;
 
 	/**
-	 * TODO Put here a description of what this constructor does.
+	 * Creates a new galaxy given a set of stars.
 	 *
 	 * @param stars
 	 */
@@ -20,7 +20,7 @@ public class Galaxy {
 	}
 	
 	/**
-	 * Returns the value of the field called 'stars'.
+	 * Returns the set of stars.
 	 * @return Returns the stars.
 	 */
 	public TreeSet<Star> getStars() {

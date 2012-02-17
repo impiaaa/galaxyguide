@@ -1,8 +1,8 @@
 
 /**
- * TODO Put here a description of what this class does.
+ * A connection class that holds a target star, accompanied by a cost.
  *
- * @author localmgr.
+ * @author Brandon Cox
  *         Created Feb 8, 2012.
  */
 
@@ -11,7 +11,7 @@ public class Connection implements Comparable<Connection> {
 	private double cost;
 
 	/**
-	 * TODO Put here a description of what this constructor does.
+	 * Creates a new connection given a target star and a cost.
 	 *
 	 * @param target
 	 * @param cost

@@ -2,12 +2,27 @@ import java.util.PriorityQueue;
 import java.util.TreeSet;
 
 
+/**
+ * Generates connections given a set of stars
+ *
+ * @author Eric Guillford
+ *         Created Feb 16, 2012.
+ */
 public class ConnectionGenerator {
 	
+	/**
+	 * Creates a new connection generator
+	 *
+	 */
 	public ConnectionGenerator(){
 		
 	}
 	
+	/**
+	 * Generates connections given a set of stars.
+	 *
+	 * @param tree
+	 */
 	public void generateConnectionRange(TreeSet<Star> tree){
 		for(Star i:tree){
 			
