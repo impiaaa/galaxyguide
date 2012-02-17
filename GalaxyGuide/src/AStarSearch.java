@@ -75,14 +75,15 @@ public class AStarSearch {
 		 * @param curr
 		 * @param prev_path
 		 * @param new_cost
+		 * @param h 
 		 */
-		public State(Star curr, LinkedList<Star> prev_path, double new_cost) {
+		public State(Star curr, LinkedList<Star> prev_path, double new_cost, Heuristic h) {
 			this.star = curr;
 			this.path = new LinkedList<Star>();
 			this.path.addAll(prev_path);
 			this.path.add(curr);
 			this.cost = new_cost;
-			this.heuristic = new DistanceHeuristic();
+			this.heuristic = h;
 			// Add things as needed
 		}
 
@@ -120,7 +121,7 @@ public class AStarSearch {
 				if (c.getCost() != 0.0) {
 					double new_cost = this.cost + c.getCost();
 					State new_state = new State(c.getTarget(), this.path,
-							new_cost);
+							new_cost,this.heuristic);
 					os.add(new_state);
 				}
 
@@ -221,12 +222,13 @@ public class AStarSearch {
 	 * 
 	 * @param st
 	 * @param g
+	 * @param h 
 	 */
-	public AStarSearch(Star st, Star g) {
+	public AStarSearch(Star st, Star g, Heuristic h) {
 		this.goal = g;
 		this.openset = new PriorityQueue<State>();
 		this.closedset = new HashSet<Star>();
-		this.start_state = new State(st, new LinkedList<Star>(), 0);
+		this.start_state = new State(st, new LinkedList<Star>(), 0, h);
 	}
 
 	/**
