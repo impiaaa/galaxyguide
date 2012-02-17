@@ -33,6 +33,26 @@ public class AStarSearch {
 		}
 	}
 
+	
+	/**
+	 * The heuristic for the i cant understand cost function
+	 *
+	 * @author niz.
+	 *         Created Feb 17, 2012.
+	 */
+	public class CHeuristic implements Heuristic {
+		@Override
+		public double hfunction(Star start, Star goal) {
+			return Math.sqrt(Math.pow(
+					(start.getPosition().x - goal.getPosition().x), 2)
+					+ Math.pow((start.getPosition().y - goal.getPosition().y),
+							2)
+					+ Math.pow((start.getPosition().z - goal.getPosition().z),
+							2))/Math.abs(start.getRange()-goal.getRange());
+		}
+	}
+	
+	
 	/**
 	 * The state class for search
 	 * 
