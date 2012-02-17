@@ -6,9 +6,9 @@ import java.util.TreeSet;
 
 
 /**
- * TODO Put here a description of what this class does.
+ * A brute-force generator for a network of stars that creates possible trips between the stars that come back to the given starting star.
  *
- * @author localmgr.
+ * @author Brandon Cox
  *         Created Feb 12, 2012.
  */
 public class TripPlanner {
@@ -18,35 +18,53 @@ public class TripPlanner {
 	
 	private Star startingPoint;
 	private double maxCost;
+	private double startTime;
 	
 	/**
-	 * TODO Put here a description of what this constructor does.
+	 * Creates and initializes a new trip planner.
 	 *
 	 */
 	public TripPlanner(){
 		this.possibleTrips = new PriorityQueue<Trip> ();
 	}
 	
+	/**
+	 * Returns all possible trips starting at the given star through the galaxy.
+	 *
+	 * @return A priorityqueue ordered by the most attractive to least attractive trip.
+	 */
 	public PriorityQueue<Trip> getPossibleTrips(){
 		return this.possibleTrips;
 	}
 	
+	/**
+	 * Returns a hashmap of all possible trips that is indexed by the different attractions on planets
+	 *
+	 * @return a hashmap of all possible trips
+	 */
 	public HashMap<String, PriorityQueue<Trip>> getAttractionMap(){
 		return this.attractionMap;
 	}
 	
-	
+	/**
+	 * Compiles all the possible trips starting from the given star, given the maximum cost allowed.
+	 *
+	 * @param startingPoint
+	 * @param maxCost
+	 */
 	public void compileTrips(Star startingPoint, double maxCost){
 		
 		this.attractionMap = new HashMap<String, PriorityQueue<Trip>>();
 		this.startingPoint = startingPoint;
 		this.maxCost = maxCost;
-				
+						
 		LinkedList<Connection> tripSoFar = new LinkedList<Connection>();
 		tripSoFar.add(new Connection(startingPoint, 0.));
 		
 		TreeSet<Star> starsPassed = new TreeSet<Star>();
 		starsPassed.add(startingPoint);
+		
+		this.startTime = System.currentTimeMillis();
 		
 		this.getTrips(tripSoFar, 0., 0, new LinkedList<String>(), startingPoint, starsPassed);
 		
@@ -56,7 +74,7 @@ public class TripPlanner {
 		
 		while(tripIterator.hasNext()){
 			Trip curTrip = tripIterator.next();
-						
+			
 			curTrip.setName("Trip " + num);
 			
 			num++;
@@ -67,14 +85,13 @@ public class TripPlanner {
 	
 	
 	/**
-	 * TODO Put here a description of what this method does.
+	 * Recursive, brute-force method of finding all possible trips.
 	 *
 	 * @param startingPoint
 	 * @param maxCost
-	 * @return
 	 */
-	private void getTrips(LinkedList<Connection> tripSoFar, double costSoFar, int attractionSoFar, LinkedList<String> attractionsSoFar, Star curStar, TreeSet<Star> starsPassed) {
-		// TODO Auto-generated method stub.
+	@SuppressWarnings("unchecked")
+	private void getTrips(LinkedList<Connection> tripSoFar, double costSoFar, int attractionSoFar, LinkedList<String> attractionsSoFar, Star curStar, TreeSet<Star> starsPassed) {		
 		
 		if (!starsPassed.contains(curStar)){
 			attractionSoFar = curStar.getInterestLevel() + attractionSoFar;
@@ -103,7 +120,6 @@ public class TripPlanner {
 					tripList = new PriorityQueue<Trip>();
 				}
 				
-				
 				tripList.add(tripToHere);
 				
 				this.attractionMap.put(curAttraction, tripList);
@@ -112,12 +128,16 @@ public class TripPlanner {
 			this.possibleTrips.add(tripToHere);
 		}
 		
-		Iterator<Connection> connectionIterator = curStar.getConnections().iterator();
+		Iterator<Connection> connectionIterator = curStar.getConnections().iterator();		
 		
 		while(connectionIterator.hasNext()){
 			Connection connector = connectionIterator.next();
-			double connectionCost = connector.getCost();
-						
+			double connectionCost = connector.getCost();	
+			
+			if(System.currentTimeMillis() > this.startTime + 5000){
+				return;
+			}
+			
 			if (costSoFar + connectionCost < this.maxCost){
 				
 				Star connectingTo = connector.getTarget();
@@ -125,14 +145,11 @@ public class TripPlanner {
 				LinkedList<Connection> newConnectionList = (LinkedList<Connection>) tripSoFar.clone();
 				newConnectionList.add(connector);
 				
-				
 				this.getTrips(newConnectionList, costSoFar + connectionCost, attractionSoFar, attractionsSoFar, connectingTo, (TreeSet<Star>)starsPassed.clone());
 			}
 			
 		}
-		
-		// if the cost so far + the cost of the connection is less than the maximum cost, proceed
-		
+				
 	}
 	
 }

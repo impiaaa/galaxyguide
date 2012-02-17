@@ -6,7 +6,7 @@
  *         Created Feb 8, 2012.
  */
 
-public class Connection {
+public class Connection implements Comparable<Connection> {
 	private Star target;
 	private double cost;
 
@@ -26,7 +26,7 @@ public class Connection {
 		return "Connection [target=" + this.target.getName() + ", cost=" + this.cost
 				+ "]";
 	}
-
+	
 	/**
 	 * Returns the value of the field called 'target'.
 	 * @return Returns the target.
@@ -57,5 +57,20 @@ public class Connection {
 	 */
 	public void setCost(double cost) {
 		this.cost = cost;
+	}
+
+	@Override
+	public int compareTo(Connection o) {
+		
+		double otherCost = o.getCost();
+		
+		if(this.cost > otherCost){
+			return 1;
+		}
+		else if (this.cost < otherCost){
+			return -1;
+		}
+		
+		return 0;
 	}
 }

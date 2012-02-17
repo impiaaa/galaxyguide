@@ -4,7 +4,7 @@ import java.util.TreeSet;
 
 
 /**
- * TODO Put here a description of what this class does.
+ * A star that has attractions and connections and belongs to a galaxy.
  *
  * @author Brandon Cox
  *         Created Feb 12, 2012.
@@ -18,6 +18,14 @@ public class Trip implements Comparable<Trip> {
 	private String name;
 
 	
+	/**
+	 * Creates a new trip given a set of connections, a total cost and total attraction level, and a list of specific attractions.
+	 *
+	 * @param connections
+	 * @param totalCost
+	 * @param totalAttraction
+	 * @param attractions
+	 */
 	public Trip(LinkedList<Connection> connections, double totalCost, int totalAttraction, LinkedList<String> attractions){
 		
 		LinkedList<Star> starList = new LinkedList<Star>();
@@ -72,7 +80,7 @@ public class Trip implements Comparable<Trip> {
 	 * @return Returns the totalCost.
 	 */
 	public double getTotalCost() {
-		return totalCost;
+		return this.totalCost;
 	}
 
 	/**
@@ -88,7 +96,7 @@ public class Trip implements Comparable<Trip> {
 	 * @return Returns the connections.
 	 */
 	public LinkedList<Star> getConnections() {
-		return connections;
+		return this.connections;
 	}
 
 	/**
@@ -104,7 +112,7 @@ public class Trip implements Comparable<Trip> {
 	 * @return Returns the attractions.
 	 */
 	public LinkedList<String> getAttractions() {
-		return attractions;
+		return this.attractions;
 	}
 
 	/**
@@ -115,13 +123,27 @@ public class Trip implements Comparable<Trip> {
 		this.attractions = attractions;
 	}
 	
+	/**
+	 * Sets the name of this star
+	 *
+	 * @param name
+	 */
 	public void setName(String name){
 		this.name = name;
 	}
 	
+	@Override
 	public String toString(){
 		
-		return this.name + " (Cost = " + (int)this.totalCost + " Attraction = " + this.totalAttraction + " NumStars = " + this.connections.size() + " )";
+		TreeSet<Star> starsVisited = new TreeSet<Star>();
+		
+		Iterator<Star> starIterator = this.connections.iterator();
+		
+		while(starIterator.hasNext()){
+			starsVisited.add(starIterator.next());
+		}
+		
+		return this.name + " (Cost = " + (int)this.totalCost + " Attraction = " + this.totalAttraction + " NumStars = " + (starsVisited.size()) + " )";
 		
 	}
 	
