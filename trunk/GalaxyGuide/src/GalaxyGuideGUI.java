@@ -140,7 +140,6 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 		sl_tripPanel.putConstraint(SpringLayout.EAST, this.btnFindTrips, -10, SpringLayout.EAST, tripPanel);
 		tripPanel.add(this.btnFindTrips);
 		
-		this.tripList = new JList();
 		this.starTripList = new JList(this.starModel);
 		this.starTripList.addListSelectionListener(this);
 		JScrollPane s1 = new JScrollPane(this.starTripList);
@@ -156,6 +155,8 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 		sl_tripPanel.putConstraint(SpringLayout.EAST, this.tripSearch, -10, SpringLayout.EAST, tripPanel);
 		tripPanel.add(this.tripSearch);
 				
+		this.tripList = new JList();
+		this.tripList.addListSelectionListener(this);
 		JScrollPane s2 = new JScrollPane(this.tripList);
 		sl_tripPanel.putConstraint(SpringLayout.NORTH, s2, 6, SpringLayout.VERTICAL_CENTER, tripPanel);
 		sl_tripPanel.putConstraint(SpringLayout.WEST, s2, 10, SpringLayout.WEST, tripPanel);
