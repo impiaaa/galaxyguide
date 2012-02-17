@@ -8,15 +8,13 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import java.util.ArrayList;
-import java.util.PriorityQueue;
 import java.util.TreeSet;
 
 
 /**
- * TODO Put here a description of what this class does.
+ * Launches the galaxy guide program and runs the GUI.
  *
- * @author alvessr.
+ * @author Spencer Alves
  *         Created Feb 6, 2012.
  */
 public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, ActionListener {

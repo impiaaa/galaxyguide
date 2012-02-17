@@ -6,7 +6,8 @@ import java.util.LinkedList;
 /**
  * This class contains DijkstrasSearch
  * 
- * @author niz. Created Feb 13, 2012.
+ * @author Zhihao Ni 
+ * Created Feb 13, 2012.
  */
 public class DijkstrasSearch {
 	private Star goal;
