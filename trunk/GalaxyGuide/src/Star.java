@@ -1,7 +1,7 @@
 import java.util.LinkedList;
 
 /**
- * This star class acts as a node for the A star pathfinding algorithm
+ * This star class acts as a node for the pathfinding algorithms.
  *
  * @author Brandon Cox, Spencer Alves, Eric Guilford
  *         Created Feb 2, 2012.
@@ -16,7 +16,7 @@ public class Star implements Comparable<Star> {
 	private double range; 
 	
 	/**
-	 * TODO Put here a description of what this constructor does.
+	 * Creates and initializes a new star given a name.
 	 *
 	 * @param name
 	 */
@@ -77,7 +77,7 @@ public class Star implements Comparable<Star> {
 	}
 	
 	/**
-	 * TODO Put here a description of what this method does.
+	 * Adds an attraction to this star.
 	 *
 	 * @param attraction
 	 */
@@ -85,12 +85,17 @@ public class Star implements Comparable<Star> {
 		this.attractions.add(attraction);
 	}
 	
+	/**
+	 * Sets the list of attractions to the given list
+	 *
+	 * @param a the linked list of attractions
+	 */
 	public void setAttractions(LinkedList<String> a){
 		this.attractions = a;
 	}
 	
 	/**
-	 * TODO Put here a description of what this method does.
+	 * Adds a connection to the star.
 	 *
 	 * @param connection
 	 */
@@ -120,18 +125,18 @@ public class Star implements Comparable<Star> {
 	}
 
 	/**
-	 * TODO Put here a description of what this method does.
+	 * Returns the value of the field called 'range'.
 	 *
-	 * @return
+	 * @return Returns the range.
 	 */
 	public double getRange() {
 		return this.range;
 	}
 
 	/**
-	 * TODO Put here a description of what this method does.
+	 * Sets the field called 'range' to the given value.
 	 *
-	 * @param range
+	 * @param range The range to set.
 	 */
 	public void setRange(double range) {
 		this.range = range;
