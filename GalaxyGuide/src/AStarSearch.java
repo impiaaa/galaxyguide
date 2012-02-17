@@ -14,6 +14,16 @@ public class AStarSearch {
 	private State start_state;
 	private HashSet<Star> closedset;
 	private PriorityQueue<State> openset;
+	private PriorityQueue<State> allroute;
+	private LinkedList<State> allroute1;
+	/**
+	 * get all route
+	 *
+	 * @return linkedlist
+	 */
+	public LinkedList<State> getroute(){
+		return this.allroute1;
+	}
 
 	/**
 	 * The Heuristic for distance
@@ -243,9 +253,20 @@ public class AStarSearch {
 		this.openset.add(this.start_state);
 		this.closedset = new HashSet<Star>();
 		while (this.openset.peek() != null) {
+			this.allroute = this.openset;
 			State s = this.openset.poll();
 			if (s.isGoal())
 				return s;
+			if (!this.closedset.contains(s.star)) {
+				this.closedset.add(s.star);
+				s.next(this.openset);
+			}
+		}
+		
+		while (this.allroute.peek() != null) {
+			State s = this.allroute.poll();
+			if (s.isGoal())
+				this.allroute1.add(s);
 			if (!this.closedset.contains(s.star)) {
 				this.closedset.add(s.star);
 				s.next(this.openset);
