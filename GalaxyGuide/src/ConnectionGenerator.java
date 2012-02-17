@@ -18,6 +18,41 @@ public class ConnectionGenerator {
 		
 	}
 	
+	public void generateConnectionTime(TreeSet<Star> tree){
+		for(Star i : tree){
+			for(Star j : tree) {
+				if(j.equals(i)) continue;
+				if(j.getName().charAt(0) > i.getName().charAt(0)+1) continue;
+				double distance = Math.sqrt((j.getPosition().x-i.getPosition().x)*(j.getPosition().x-i.getPosition().x)
+						                   +(j.getPosition().y-i.getPosition().y)*(j.getPosition().y-i.getPosition().y)
+						                   +(j.getPosition().z-i.getPosition().z)*(j.getPosition().z-i.getPosition().z));
+				if(distance <= j.getRange()) {
+					double cost = distance / Math.abs(i.getRange() - j.getRange());
+					Connection cont = new Connection(j,cost);
+					i.addConnection(cont);
+				}
+			}
+		}
+	}
+	
+	
+/*	public void generateConnectionSpeed(TreeSet<Star> tree){
+		for(Star i : tree){
+			for(Star j : tree) {
+				if(j.equals(i)) continue;
+				if(j.getName().charAt(0) > i.getName().charAt(0)+1) continue;
+				double distance = Math.sqrt((j.getPosition().x-i.getPosition().x)*(j.getPosition().x-i.getPosition().x)
+						                   +(j.getPosition().y-i.getPosition().y)*(j.getPosition().y-i.getPosition().y)
+						                   +(j.getPosition().z-i.getPosition().z)*(j.getPosition().z-i.getPosition().z));
+				if(distance <= j.getRange()) {
+					double cost = distance*20;
+					Connection cont = new Connection(j,cost);
+					i.addConnection(cont);
+				}
+			}
+		}
+	}
+*/	
 	/**
 	 * Generates connections given a set of stars.
 	 *
