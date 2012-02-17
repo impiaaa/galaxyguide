@@ -6,15 +6,19 @@ import java.util.Scanner;
 
 
 /**
- * TODO Put here a description of what this class does.
+ * Loads all possible attractions from a text file, then gives them out randomly.
  *
- * @author localmgr.
+ * @author Brandon Cox
  *         Created Feb 15, 2012.
  */
 public class AttractionGenerator {
 	
 	private static ArrayList<String> attractionList;
 	
+	/**
+	 * Loads all possible attractions from a text file.
+	 *
+	 */
 	public static void compileAttractions(){
 		
 		
@@ -35,6 +39,11 @@ public class AttractionGenerator {
 		}
 	}
 	
+	/**
+	 * Returns a random list of attractions.
+	 *
+	 * @return a random list of attractions
+	 */
 	public static LinkedList<String> getAttractions(){
 		
 		LinkedList<String> attractionList = new LinkedList<String> ();
