@@ -57,7 +57,7 @@ public class AStarTest {
 		Starlist.add(D);
 		Starlist.add(E);
 		
-		AStarSearch a = new AStarSearch(B,D);
+		AStarSearch a = new AStarSearch(B,D,new AStarSearch.DistanceHeuristic());
 		AStarSearch.State test = a.search();
 		
 		DijkstrasSearch d = new DijkstrasSearch(B,D);
