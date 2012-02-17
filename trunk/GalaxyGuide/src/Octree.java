@@ -2,10 +2,22 @@ import java.util.LinkedList;
 import java.util.TreeSet;
 
 
+/**
+ * An Octree for random generation and connection.
+ *
+ * @author Eric Guillford
+ *         Created Feb 16, 2012.
+ */
 public class Octree {
 	
-	public double size; //size of the galaxy/tree, in kiloparsecs
-	public final int    depth;
+	/**
+	 * Size of the galaxy or tree, in kiloparsecs.
+	 */
+	public double size;
+	/**
+	 * The depth of the galaxy or tree.
+	 */
+	public final int depth;
 	private octNode root = null;
 	
 
@@ -16,8 +28,8 @@ public class Octree {
 	 */
 	public Octree(int depth){
 		this.depth = depth;
-		root = new octNode(0,0.0,0.0,0.0);
-		size = 10;
+		this.root = new octNode(0,0.0,0.0,0.0);
+		this.size = 10;
 	}
 	
 	/**
@@ -40,14 +52,14 @@ public class Octree {
 	 */
 	public boolean insert(Star e, int level){
 		if(level > this.depth) return false;
-		if(e.getPosition().x > size) return false;
-		if(e.getPosition().y > size) return false;
-		if(e.getPosition().z > size) return false;
+		if(e.getPosition().x > this.size) return false;
+		if(e.getPosition().y > this.size) return false;
+		if(e.getPosition().z > this.size) return false;
 		
 		if(level == 0) {
-			return root.add(e);
+			return this.root.add(e);
 		} else {
-			return root.insert(e,level);
+			return this.root.insert(e,level);
 		}
 	}
 	
@@ -59,60 +71,65 @@ public class Octree {
 		LinkedList<Star> list = new LinkedList<Star>();
 		
 		public octNode(int level,double x, double y, double z){
-			double mySize = size/(2^level);
-			loc = new Vector3D(x,y,z);
-			bnd = new Vector3D(x+mySize,y+mySize,z+mySize);
+			double mySize = Octree.this.size/(2^level);
+			this.loc = new Vector3D(x,y,z);
+			this.bnd = new Vector3D(x+mySize,y+mySize,z+mySize);
 			this.level = level;
 			if(this.level <= Octree.this.depth){
 				//create subChildren at proper locations
-				children[0] = new octNode(level+1,loc.x,loc.y,loc.z);
-				children[1] = new octNode(level+1,loc.x+((bnd.x-loc.x)/2),loc.y,loc.z);
-				children[2] = new octNode(level+1,loc.x,loc.y,loc.z+((bnd.z-loc.z)/2));
-				children[3] = new octNode(level+1,loc.x+((bnd.x-loc.x)/2),loc.y,loc.z+((bnd.z-loc.z)/2));
-				children[4] = new octNode(level+1,loc.x,loc.y+((bnd.y-loc.y)/2),loc.z);
-				children[5] = new octNode(level+1,loc.x+((bnd.x-loc.x)/2),loc.y+((bnd.y-loc.y)/2),loc.z);
-				children[6] = new octNode(level+1,loc.x,loc.y+((bnd.y-loc.y)/2),loc.z+((bnd.z-loc.z)/2));
-				children[7] = new octNode(level+1,loc.x+((bnd.x-loc.x)/2),loc.y+((bnd.y-loc.y)/2),loc.z+((bnd.z-loc.z)/2));
+				this.children[0] = new octNode(level+1,this.loc.x,this.loc.y,this.loc.z);
+				this.children[1] = new octNode(level+1,this.loc.x+((this.bnd.x-this.loc.x)/2),this.loc.y,this.loc.z);
+				this.children[2] = new octNode(level+1,this.loc.x,this.loc.y,this.loc.z+((this.bnd.z-this.loc.z)/2));
+				this.children[3] = new octNode(level+1,this.loc.x+((this.bnd.x-this.loc.x)/2),this.loc.y,this.loc.z+((this.bnd.z-this.loc.z)/2));
+				this.children[4] = new octNode(level+1,this.loc.x,this.loc.y+((this.bnd.y-this.loc.y)/2),this.loc.z);
+				this.children[5] = new octNode(level+1,this.loc.x+((this.bnd.x-this.loc.x)/2),this.loc.y+((this.bnd.y-this.loc.y)/2),this.loc.z);
+				this.children[6] = new octNode(level+1,this.loc.x,this.loc.y+((this.bnd.y-this.loc.y)/2),this.loc.z+((this.bnd.z-this.loc.z)/2));
+				this.children[7] = new octNode(level+1,this.loc.x+((this.bnd.x-this.loc.x)/2),this.loc.y+((this.bnd.y-this.loc.y)/2),this.loc.z+((this.bnd.z-this.loc.z)/2));
 			} else {
-				children = null;
+				this.children = null;
 			}
 		}
 		
 
 		public boolean add(Star e) {
-			list.add(e);
+			this.list.add(e);
 			return true;
 		}
 
 		public boolean insert(Star e, int level) {
 			int node = 0;
-			if(e.getPosition().y > loc.y+((bnd.y-loc.y)/2)) node+=4;
-			if(e.getPosition().z > loc.z+((bnd.z-loc.z)/2)) node+=2;
-			if(e.getPosition().x > loc.x+((bnd.x-loc.x)/2)) node+=1;
+			if(e.getPosition().y > this.loc.y+((this.bnd.y-this.loc.y)/2)) node+=4;
+			if(e.getPosition().z > this.loc.z+((this.bnd.z-this.loc.z)/2)) node+=2;
+			if(e.getPosition().x > this.loc.x+((this.bnd.x-this.loc.x)/2)) node+=1;
 			if(level == this.level+1){
-				return children[node].add(e);
+				return this.children[node].add(e);
 			} else {
-				return children[node].insert(e, level);
+				return this.children[node].insert(e, level);
 			}
 		}
 
 
 		public void toTree(TreeSet<Star> tree) {
-			for(Star i : list){
+			for(Star i : this.list){
 				tree.add(i);
 			}
-			if(children!= null){
+			if(this.children!= null){
 				for(int i = 0; i< 8; i++){
-					children[i].toTree(tree);
+					this.children[i].toTree(tree);
 				}
 			}
 		}
 		
 	}
 
+	/**
+	 * Returns a TreeSet of the stars in this octree.
+	 *
+	 * @return a TreeSet of the stars in this octree.
+	 */
 	public TreeSet<Star> toTreeSet() {
 		TreeSet<Star> tree = new TreeSet<Star>();
-		root.toTree(tree);
+		this.root.toTree(tree);
 		return tree;
 	}
 	

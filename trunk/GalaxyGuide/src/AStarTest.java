@@ -5,7 +5,8 @@ import java.util.ArrayList;
 /**
  * A Star Test
  * 
- * @author niz. Created Feb 13, 2012.
+ * @author Zhihao Ni
+ *         Created Feb 13, 2012
  */
 public class AStarTest {
 
@@ -77,6 +78,13 @@ public class AStarTest {
 
 	}
 
+	/**
+	 * Returns the distance from one star to the other.
+	 *
+	 * @param a
+	 * @param b
+	 * @return double
+	 */
 	static double cost(Star a, Star b) {
 		return Math.sqrt(Math.pow((a.getPosition().x - b.getPosition().x), 2)
 				+ Math.pow((a.getPosition().y - b.getPosition().y), 2)

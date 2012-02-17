@@ -2,7 +2,7 @@
 /**
  * Stores a point in 3d space, or a vector in 3d space.
  *
- * @author alvessr.
+ * @author Spencer Alves
  *         Created Feb 2, 2012.
  */
 public class Vector3D {

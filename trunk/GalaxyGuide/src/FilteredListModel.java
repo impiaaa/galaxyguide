@@ -7,7 +7,7 @@ import javax.swing.AbstractListModel;
 /**
  * TODO Put here a description of what this class does.
  *
- * @author alvessr.
+ * @author Spencer Alves
  *         Created Feb 12, 2012.
  * @param <E> 
  */

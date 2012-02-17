@@ -4,9 +4,10 @@ import java.util.HashSet;
 import java.util.LinkedList;
 
 /**
- * This class contains A Star Search and D
+ * This class contains A Star Search
  * 
- * @author niz. Created Feb 13, 2012.
+ * @author Zhihao Ni
+ *         Created Feb 13, 2012.
  */
 public class AStarSearch {
 	private Star goal;
@@ -17,7 +18,8 @@ public class AStarSearch {
 	/**
 	 * The Heuristic for distance
 	 * 
-	 * @author niz. Created Feb 15, 2012.
+	 * @author Zhihao Ni
+	 *         Created Feb 13, 2012.
 	 */
 	public class DistanceHeuristic implements Heuristic {
 		@Override
@@ -34,7 +36,8 @@ public class AStarSearch {
 	/**
 	 * The state class for search
 	 * 
-	 * @author niz. Created Feb 13, 2012.
+	 * @author Zhihao Ni
+	 *         Created Feb 13, 2012.
 	 */
 	public class State implements Comparable<State> {
 

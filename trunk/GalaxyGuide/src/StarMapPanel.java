@@ -5,9 +5,9 @@ import javax.swing.JPanel;
 
 
 /**
- * TODO Put here a description of what this class does.
+ * Displays a map will all the stars on it.
  *
- * @author alvessr.
+ * @author Spencer Alves
  *         Created Feb 12, 2012.
  */
 public class StarMapPanel extends JPanel {
@@ -15,7 +15,7 @@ public class StarMapPanel extends JPanel {
 	private Star highlight;
 	private Iterable<Star> path;
 	/**
-	 * TODO Put here a description of what this constructor does.
+	 * Creates a new map with all the stars on it.
 	 *
 	 * @param s
 	 */
