@@ -48,7 +48,7 @@ public class AttractionGenerator {
 		
 		LinkedList<String> attractionList = new LinkedList<String> ();
 		
-		int numAttractions = (int) (Math.random() * 3);
+		int numAttractions = (int) (Math.random() * 2);
 		
 		for(int i = 0; i <= numAttractions; i++){
 			int randomIndex = (int) (Math.round(Math.random() * (AttractionGenerator.attractionList.size() - 1)));

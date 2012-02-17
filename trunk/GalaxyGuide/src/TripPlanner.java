@@ -33,8 +33,15 @@ public class TripPlanner {
 	 *
 	 * @return A priorityqueue ordered by the most attractive to least attractive trip.
 	 */
-	public PriorityQueue<Trip> getPossibleTrips(){
-		return this.possibleTrips;
+	public LinkedList<Trip> getPossibleTrips(){
+		
+		LinkedList<Trip> tripList = new LinkedList<Trip>();
+		
+		while(this.possibleTrips.size() > 0){
+			tripList.add(this.possibleTrips.poll());
+		}
+		
+		return tripList;
 	}
 	
 	/**
@@ -66,7 +73,7 @@ public class TripPlanner {
 		
 		this.startTime = System.currentTimeMillis();
 		
-		this.getTrips(tripSoFar, 0., 0, new LinkedList<String>(), startingPoint, starsPassed);
+		this.getTrips(tripSoFar, 0., 0, new TreeSet<String>(), startingPoint, starsPassed);
 		
 		Iterator<Trip> tripIterator = this.possibleTrips.iterator();
 		
@@ -74,8 +81,10 @@ public class TripPlanner {
 		
 		while(tripIterator.hasNext()){
 			Trip curTrip = tripIterator.next();
-			
+						
 			curTrip.setName("Trip " + num);
+			
+			System.out.println(curTrip.getAttractions());
 			
 			num++;
 			
@@ -91,7 +100,7 @@ public class TripPlanner {
 	 * @param maxCost
 	 */
 	@SuppressWarnings("unchecked")
-	private void getTrips(LinkedList<Connection> tripSoFar, double costSoFar, int attractionSoFar, LinkedList<String> attractionsSoFar, Star curStar, TreeSet<Star> starsPassed) {		
+	private void getTrips(LinkedList<Connection> tripSoFar, double costSoFar, int attractionSoFar, TreeSet<String> attractionsSoFar, Star curStar, TreeSet<Star> starsPassed) {		
 		
 		if (!starsPassed.contains(curStar)){
 			attractionSoFar = curStar.getInterestLevel() + attractionSoFar;
@@ -145,7 +154,7 @@ public class TripPlanner {
 				LinkedList<Connection> newConnectionList = (LinkedList<Connection>) tripSoFar.clone();
 				newConnectionList.add(connector);
 				
-				this.getTrips(newConnectionList, costSoFar + connectionCost, attractionSoFar, attractionsSoFar, connectingTo, (TreeSet<Star>)starsPassed.clone());
+				this.getTrips(newConnectionList, costSoFar + connectionCost, attractionSoFar, (TreeSet<String>)(attractionsSoFar.clone()), connectingTo, (TreeSet<Star>)starsPassed.clone());
 			}
 			
 		}
