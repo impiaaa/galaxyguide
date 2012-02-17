@@ -157,7 +157,7 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 		sl_tripPanel.putConstraint(SpringLayout.NORTH, s1, 6, SpringLayout.SOUTH, this.btnFindTrips);
 		sl_tripPanel.putConstraint(SpringLayout.WEST, s1, 10, SpringLayout.WEST, tripPanel);
 		sl_tripPanel.putConstraint(SpringLayout.EAST, s1, -10, SpringLayout.EAST, tripPanel);
-		//sl_tripPanel.putConstraint(SpringLayout.SOUTH, s1, -6, SpringLayout.VERTICAL_CENTER, tripPanel);
+		sl_tripPanel.putConstraint(SpringLayout.SOUTH, s1, -6, SpringLayout.VERTICAL_CENTER, tripPanel);
 		tripPanel.add(s1);
 				
 		this.tripSearch = new JTextField();
@@ -169,7 +169,7 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 		this.tripList = new JList();
 		this.tripList.addListSelectionListener(this);
 		JScrollPane s2 = new JScrollPane(this.tripList);
-		//sl_tripPanel.putConstraint(SpringLayout.NORTH, s2, 6, SpringLayout.VERTICAL_CENTER, tripPanel);
+		sl_tripPanel.putConstraint(SpringLayout.NORTH, s2, 6, SpringLayout.VERTICAL_CENTER, tripPanel);
 		sl_tripPanel.putConstraint(SpringLayout.WEST, s2, 10, SpringLayout.WEST, tripPanel);
 		sl_tripPanel.putConstraint(SpringLayout.SOUTH, s2, -6, SpringLayout.NORTH, this.tripSearch);
 		sl_tripPanel.putConstraint(SpringLayout.EAST, s2, -10, SpringLayout.EAST, tripPanel);
@@ -194,13 +194,13 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 		JScrollPane p2 = new JScrollPane(this.fromList);
 		sl_routePanel.putConstraint(SpringLayout.WEST, p2, 10, SpringLayout.WEST, routePanel);
 		sl_routePanel.putConstraint(SpringLayout.SOUTH, p2, -6, SpringLayout.NORTH, this.starSearch);
-		//sl_routePanel.putConstraint(SpringLayout.EAST, p2, -3, SpringLayout.HORIZONTAL_CENTER, routePanel);
+		sl_routePanel.putConstraint(SpringLayout.EAST, p2, -3, SpringLayout.HORIZONTAL_CENTER, routePanel);
 		routePanel.add(p2);
 		
 		this.toList = new JList();
 		this.toList.addListSelectionListener(this);
 		JScrollPane p3 = new JScrollPane(this.toList);
-		//sl_routePanel.putConstraint(SpringLayout.WEST, p3, 3, SpringLayout.HORIZONTAL_CENTER, routePanel);
+		sl_routePanel.putConstraint(SpringLayout.WEST, p3, 3, SpringLayout.HORIZONTAL_CENTER, routePanel);
 		sl_routePanel.putConstraint(SpringLayout.SOUTH, p3, -6, SpringLayout.NORTH, this.starSearch);
 		sl_routePanel.putConstraint(SpringLayout.EAST, p3, -10, SpringLayout.EAST, routePanel);
 		routePanel.add(p3);
