@@ -106,17 +106,10 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 		starMapPane.setViewportView(this.canvas);
 		
 		JLabel starMapLabel = new JLabel("Star Map");
+		sl_starMapPanel.putConstraint(SpringLayout.NORTH, starMapPane, 15, SpringLayout.SOUTH, starMapLabel);
 		sl_starMapPanel.putConstraint(SpringLayout.NORTH, starMapLabel, 6, SpringLayout.NORTH, starMapPanel);
 		sl_starMapPanel.putConstraint(SpringLayout.WEST, starMapLabel, 6, SpringLayout.WEST, starMapPanel);
 		starMapPanel.add(starMapLabel);
-		
-		this.btnGo = new JButton("Go!");
-		this.btnGo.addActionListener(this);
-		this.btnGo.setMnemonic('G');
-		sl_starMapPanel.putConstraint(SpringLayout.NORTH, starMapPane, 6, SpringLayout.SOUTH, this.btnGo);
-		sl_starMapPanel.putConstraint(SpringLayout.NORTH, this.btnGo, 6, SpringLayout.NORTH, starMapPanel);
-		sl_starMapPanel.putConstraint(SpringLayout.EAST, this.btnGo, -6, SpringLayout.EAST, starMapPanel);
-		starMapPanel.add(this.btnGo);
 		
 		this.tabbedPane = new JTabbedPane(SwingConstants.TOP);
 		splitPane.setLeftComponent(this.tabbedPane);
@@ -187,7 +180,6 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 		this.fromList = new JList();
 		this.fromList.addListSelectionListener(this);
 		JScrollPane p2 = new JScrollPane(this.fromList);
-		sl_routePanel.putConstraint(SpringLayout.NORTH, p2, 10, SpringLayout.NORTH, routePanel);
 		sl_routePanel.putConstraint(SpringLayout.WEST, p2, 10, SpringLayout.WEST, routePanel);
 		sl_routePanel.putConstraint(SpringLayout.SOUTH, p2, -6, SpringLayout.NORTH, this.starSearch);
 		sl_routePanel.putConstraint(SpringLayout.EAST, p2, -3, SpringLayout.HORIZONTAL_CENTER, routePanel);
@@ -196,7 +188,6 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 		this.toList = new JList();
 		this.toList.addListSelectionListener(this);
 		JScrollPane p3 = new JScrollPane(this.toList);
-		sl_routePanel.putConstraint(SpringLayout.NORTH, p3, 10, SpringLayout.NORTH, routePanel);
 		sl_routePanel.putConstraint(SpringLayout.WEST, p3, 3, SpringLayout.HORIZONTAL_CENTER, routePanel);
 		sl_routePanel.putConstraint(SpringLayout.SOUTH, p3, -6, SpringLayout.NORTH, this.starSearch);
 		sl_routePanel.putConstraint(SpringLayout.EAST, p3, -10, SpringLayout.EAST, routePanel);
@@ -204,6 +195,15 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 		
 		this.fromList.setModel(this.starModel);
 		this.toList.setModel(this.starModel);
+		
+		this.btnGo = new JButton("Go!");
+		sl_routePanel.putConstraint(SpringLayout.EAST, this.btnGo, -10, SpringLayout.EAST, routePanel);
+		sl_routePanel.putConstraint(SpringLayout.NORTH, p3, 6, SpringLayout.SOUTH, this.btnGo);
+		sl_routePanel.putConstraint(SpringLayout.NORTH, p2, 6, SpringLayout.SOUTH, this.btnGo);
+		sl_routePanel.putConstraint(SpringLayout.NORTH, this.btnGo, 10, SpringLayout.NORTH, routePanel);
+		routePanel.add(this.btnGo);
+		this.btnGo.addActionListener(this);
+		this.btnGo.setMnemonic('G');
 	}
 
 	@Override
@@ -239,8 +239,14 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 		if (arg0.getValueIsAdjusting()) {
 			return;
 		}
-		Star s = (Star) ((JList)arg0.getSource()).getSelectedValue();
-		this.canvas.setHighlight(s);
+		if ((JList)arg0.getSource() == this.tripList) {
+			Trip t = (Trip) ((JList)arg0.getSource()).getSelectedValue();
+			this.canvas.setPath(t.getConnections());
+		}
+		else {
+			Star s = (Star) ((JList)arg0.getSource()).getSelectedValue();
+			this.canvas.setHighlight(s);
+		}
 		this.canvas.repaint();
 	}
 
@@ -248,24 +254,14 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource() == this.btnGo) {
 			// Go button clicked
-			switch (this.tabbedPane.getSelectedIndex()) {
-			case 0:
-				// Trip planner
-				Trip t = (Trip) this.tripList.getSelectedValue();
-				this.canvas.setPath(t.getConnections());
+			AStarSearch search = new AStarSearch((Star)this.fromList.getSelectedValue(), (Star)this.toList.getSelectedValue(), new AStarSearch.DistanceHeuristic());
+			AStarSearch.State state = search.search();
+			if (state == null) {
+				JOptionPane.showMessageDialog(this.frmGuideToThe, "No path found", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+			else {
+				this.canvas.setPath(state.getPath());
 				this.canvas.repaint();
-				break;
-			case 1:
-				// Path search
-				AStarSearch search = new AStarSearch((Star)this.fromList.getSelectedValue(), (Star)this.toList.getSelectedValue());
-				AStarSearch.State state = search.search();
-				if (state == null) {
-					JOptionPane.showMessageDialog(this.frmGuideToThe, "No path found", "Error", JOptionPane.ERROR_MESSAGE);
-				}
-				else {
-					this.canvas.setPath(state.getPath());
-					this.canvas.repaint();
-				}
 			}
 		}
 		else if (arg0.getSource() == this.btnFindTrips) {

@@ -21,7 +21,7 @@ public class AStarSearch {
 	 * @author Zhihao Ni
 	 *         Created Feb 13, 2012.
 	 */
-	public class DistanceHeuristic implements Heuristic {
+	public static class DistanceHeuristic implements Heuristic {
 		@Override
 		public double hfunction(Star start, Star goal) {
 			return Math.sqrt(Math.pow(
@@ -40,7 +40,7 @@ public class AStarSearch {
 	 * @author niz.
 	 *         Created Feb 17, 2012.
 	 */
-	public class CHeuristic implements Heuristic {
+	public static class CHeuristic implements Heuristic {
 		@Override
 		public double hfunction(Star start, Star goal) {
 			return Math.sqrt(Math.pow(
