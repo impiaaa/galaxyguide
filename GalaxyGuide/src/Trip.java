@@ -39,6 +39,7 @@ public class Trip implements Comparable<Trip> {
 			
 		}
 		
+		
 		this.connections = starList;
 		this.totalAttraction = totalAttraction;
 		this.totalCost = totalCost;
