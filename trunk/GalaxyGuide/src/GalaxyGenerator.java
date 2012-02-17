@@ -34,7 +34,7 @@ public class GalaxyGenerator {
 			System.out.println(nodeSize);
 			for(int i = 0; i < 3; i++){
 				Vector3D pos = new Vector3D((rand.nextDouble()*nodeSize)+j.loc.x,(rand.nextDouble()*nodeSize)+j.loc.y,(rand.nextDouble()*nodeSize)+j.loc.z);
-				Star e = new Star((char)(j.level+65)+""+(rand.nextInt(26)+97)+""+(rand.nextInt(26)+97)+""+(rand.nextInt(26)+97)+""+(rand.nextInt(26)+97)+""+(rand.nextInt(26)+97));
+				Star e = new Star((char)(j.level+65)+""+(char)(rand.nextInt(26)+97)+""+(char)(rand.nextInt(26)+97)+""+(char)(rand.nextInt(26)+97)+""+(char)(rand.nextInt(26)+97)+""+(char)(rand.nextInt(26)+97));
 				e.setRange(1.5*nodeSize+(rand.nextDouble()-0.5)*(nodeSize/8));
 				e.setPosition(pos);
 				
