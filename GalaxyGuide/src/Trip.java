@@ -14,7 +14,7 @@ public class Trip implements Comparable<Trip> {
 	private LinkedList<Star> connections;
 	private double totalCost;
 	private int totalAttraction;
-	private LinkedList<String> attractions;
+	private TreeSet<String> attractions;
 	private String name;
 
 	
@@ -26,7 +26,7 @@ public class Trip implements Comparable<Trip> {
 	 * @param totalAttraction
 	 * @param attractions
 	 */
-	public Trip(LinkedList<Connection> connections, double totalCost, int totalAttraction, LinkedList<String> attractions){
+	public Trip(LinkedList<Connection> connections, double totalCost, int totalAttraction, TreeSet<String> attractions){
 		
 		LinkedList<Star> starList = new LinkedList<Star>();
 		
@@ -44,17 +44,28 @@ public class Trip implements Comparable<Trip> {
 		this.totalCost = totalCost;
 		this.attractions = attractions;
 		
+	//	System.out.println(attractions.toString());
+		
 	}
 	
 	@Override
 	public int compareTo(Trip o) {
 		
 		if (this.totalAttraction > o.getTotalAttraction()){
-			return 1;
-		}
-		else if (this.totalAttraction < o.getTotalAttraction()){
 			return -1;
 		}
+		else if (this.totalAttraction < o.getTotalAttraction()){
+			return 1;
+		}
+		else{
+			if(this.totalCost > o.totalCost){
+				return 1;
+			}
+			else if (this.totalCost < o.totalCost){
+				return -1;
+			}
+		}
+		
 		
 		return 0;
 	}
@@ -111,7 +122,7 @@ public class Trip implements Comparable<Trip> {
 	 * Returns the value of the field called 'attractions'.
 	 * @return Returns the attractions.
 	 */
-	public LinkedList<String> getAttractions() {
+	public TreeSet<String> getAttractions() {
 		return this.attractions;
 	}
 
@@ -119,7 +130,7 @@ public class Trip implements Comparable<Trip> {
 	 * Sets the field called 'attractions' to the given value.
 	 * @param attractions The attractions to set.
 	 */
-	public void setAttractions(LinkedList<String> attractions) {
+	public void setAttractions(TreeSet<String> attractions) {
 		this.attractions = attractions;
 	}
 	
