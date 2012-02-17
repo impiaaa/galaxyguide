@@ -280,6 +280,9 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 		}
 		else if (arg0.getSource() == this.btnFindTrips) {
 			Star s = (Star) this.starTripList.getSelectedValue();
+			if (s == null) {
+				return;
+			}
 			double r = this.rangeSlider.getValue();
 			
 			TripPlanner plan = new TripPlanner();
