@@ -1,19 +1,40 @@
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.TreeSet;
 
-
+/**
+ * A node for an Octree
+ * @author guilfoej
+ *
+ */
 public class octNode{
-	/**
-	 * 
-	 */
+
 	private Octree octNode;
+	/**
+	 * The location of the upper front left hand corner.
+	 */
 	final Vector3D loc;
+	/**
+	 * The location of the lower back right hand corner.
+	 */
 	final Vector3D bnd;
+	/**
+	 *  The level of the node
+	 */
 	final int level;
-	octNode[] children = new octNode[8];
-	LinkedList<Star> list = new LinkedList<Star>();
 	
+	private octNode[] children = new octNode[8];
+	private LinkedList<Star> list = new LinkedList<Star>();
+	
+	/**
+	 * Creates an octree Node
+	 * @param octree the containing octree
+	 * @param level what level this node is
+	 * @param x inital x
+	 * @param y inital y
+	 * @param z inital z
+	 */
 	public octNode(Octree octree, int level,double x, double y, double z){
 		octNode = octree;
 		double mySize = octNode.size/Math.pow(2, level);
@@ -37,11 +58,21 @@ public class octNode{
 	}
 	
 
+	/**
+	 * Add a star to the node
+	 * @param e the star to add
+	 * @return true if successful false otherwise.
+	 */
 	public boolean add(Star e) {
-		list.add(e);
-		return true;
+		return list.add(e);
 	}
-
+	
+	/**
+	 * insert star into this subtree.
+	 * @param e the star to insert
+	 * @param level the level to insert to.
+	 * @return true if successful, false otherwise.
+	 */
 	public boolean insert(Star e, int level) {
 		int node = 0;
 		if(e.getPosition().y > loc.y+((bnd.y-loc.y)/2)) node+=4;
@@ -54,7 +85,10 @@ public class octNode{
 		}
 	}
 
-
+	/**
+	 * returns the subtree as a treeSet of Stars.
+	 * @param tree the tree to insert to.
+	 */
 	public void toTree(TreeSet<Star> tree) {
 		for(Star i : list){
 			tree.add(i);
@@ -66,6 +100,10 @@ public class octNode{
 		}
 	}
 	
+	/**
+	 * returns the subtree as a treeSet of octNodes
+	 * @param tree the tree to insert to.
+	 */
 	public void toTree2(ArrayList<octNode> tree) {
 		if(children!= null){
 			for(int i = 0; i< 8; i++){
