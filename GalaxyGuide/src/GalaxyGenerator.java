@@ -1,12 +1,23 @@
 import java.util.Random;
 import java.util.TreeSet;
 
+/**
+ * Creates galaxies of stars, which can later be connected and then used to run path finding algorithms on.
+ * @author guilfoej
+ *
+ */
 
 public class GalaxyGenerator {
-	private static final double STARS_PER_KILOPARSEC = 1;
 	
 	private Random rand;
 	private Octree octree;
+	
+	/**
+	 * Generates a galaxy of stars. the stars are not connected.
+	 * Generation makes sure stars of each type are roughly evenly spaced.
+	 * @param size the size of the galaxy in kiloparsecs
+	 * @param numStarTypes the number of different star types
+	 */
 	public GalaxyGenerator(double size, int numStarTypes){
 		super();
 		rand = new Random();
@@ -14,6 +25,11 @@ public class GalaxyGenerator {
 		
 	}
 	
+	
+	/**
+	 * Generates a galaxy of size 1024 and with a depth of 3
+	 * @param seed the seed to use for the random number generator.
+	 */
 	public GalaxyGenerator(int seed){
 		System.out.println("booting");
 		rand = new Random(seed);
@@ -49,9 +65,11 @@ public class GalaxyGenerator {
 	}
 	
 	
+	/**
+	 * @return all the stars in the galaxy in a TreeSet. Sorted by name.
+	 */
 	public TreeSet<Star> getBinaryTree(){
 		TreeSet<Star> tree = octree.toTreeSet();
-		System.out.println(tree);
 		return tree;
 	}
 }

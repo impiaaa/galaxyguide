@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.TreeSet;
@@ -42,12 +43,19 @@ public class Octree implements Iterable<octNode> {
 		}
 	}
 	
+	/**
+	 * @return the contents of the octree as a treeSet, with the stars sorted by name.
+	 */
 	public TreeSet<Star> toTreeSet() {
 		TreeSet<Star> tree = new TreeSet<Star>();
 		root.toTree(tree);
 		return tree;
 	}
 	
+	/**
+	 * Returns a list of octree nodes, which can be iterated through.
+	 * @return
+	 */
 	public ArrayList<octNode> toList() {
 		ArrayList<octNode> tree = new ArrayList<octNode>();
 		tree.add(root);
