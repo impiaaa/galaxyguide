@@ -253,8 +253,12 @@ public class GalaxyGuideGUI implements DocumentListener, ListSelectionListener, 
 		}
 		if ((JList)arg0.getSource() == this.tripList) {
 			Trip t = (Trip) ((JList)arg0.getSource()).getSelectedValue();
-			this.canvas.setPath(t.getConnections());
-			this.outputList.setListData(t.getConnections().toArray());
+			
+			if(t != null){
+				this.canvas.setPath(t.getConnections());
+				this.outputList.setListData(t.toArray2());
+			}
+
 		}
 		else {
 			Star s = (Star) ((JList)arg0.getSource()).getSelectedValue();

@@ -146,5 +146,4 @@ public class Star implements Comparable<Star> {
 	public String toString() {
 		return this.name;
 	}
-	
 }

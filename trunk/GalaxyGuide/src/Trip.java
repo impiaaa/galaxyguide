@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.TreeSet;
@@ -133,6 +134,54 @@ public class Trip implements Comparable<Trip> {
 	 */
 	public void setAttractions(TreeSet<String> attractions) {
 		this.attractions = attractions;
+	}
+	
+	/**
+	 * Returns an array of more advanced stars with a more informative toString method.
+	 *
+	 * @return array of TripStars.
+	 */
+	public Object[] toArray2(){
+		
+		ArrayList<Object> finalArrayList = new ArrayList<Object>();
+		
+		finalArrayList.add(this.name);
+		
+		finalArrayList.add("Total Cost = " + (int)this.totalCost);
+		finalArrayList.add("Total Attraction = " + this.totalAttraction);
+		
+		finalArrayList.add("List of Attractions:");
+		
+		Iterator<String> attractionIterator1 = this.attractions.iterator();
+		
+		while(attractionIterator1.hasNext()){
+			finalArrayList.add(attractionIterator1.next());
+		}
+		
+		finalArrayList.add("");
+		finalArrayList.add("");
+		finalArrayList.add("");
+		finalArrayList.add("");
+		
+		Iterator<Star> connectionIterator = this.getConnections().iterator();
+		
+		while(connectionIterator.hasNext()){
+			Star newStar = connectionIterator.next();
+			
+			finalArrayList.add(newStar);
+			
+			finalArrayList.add(" Attractiveness = " + newStar.getInterestLevel());
+			
+			Iterator<String> attractionIterator = newStar.getAttractions().iterator();
+			
+			while(attractionIterator.hasNext()){
+				finalArrayList.add(" " + attractionIterator.next());
+			}
+			
+		}
+		
+		return finalArrayList.toArray();
+		
 	}
 	
 	/**
